@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 
-
 /**
  * Example of remote invocation of service fusing and load balancing.
  *
