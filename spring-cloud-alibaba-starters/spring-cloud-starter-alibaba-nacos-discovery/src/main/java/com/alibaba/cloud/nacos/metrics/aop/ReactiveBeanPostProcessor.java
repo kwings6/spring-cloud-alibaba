@@ -17,26 +17,27 @@
 package com.alibaba.cloud.nacos.metrics.aop;
 
 import com.alibaba.cloud.nacos.metrics.aop.interceptor.ReactiveInterceptor;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.web.reactive.function.client.WebClient;
 
 public class ReactiveBeanPostProcessor implements BeanPostProcessor {
-    @Autowired
-    private ReactiveInterceptor reactiveInterceptor;
+	@Autowired
+	private ReactiveInterceptor reactiveInterceptor;
 
-    @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        return bean;
-    }
+	@Override
+	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+		return bean;
+	}
 
-    @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        if (bean instanceof WebClient.Builder) {
-            WebClient.Builder builder = (WebClient.Builder) bean;
-            builder.filter(reactiveInterceptor);
-        }
-        return bean;
-    }
+	@Override
+	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+		if (bean instanceof WebClient.Builder) {
+			WebClient.Builder builder = (WebClient.Builder) bean;
+			builder.filter(reactiveInterceptor);
+		}
+		return bean;
+	}
 }

@@ -19,45 +19,47 @@ package com.alibaba.cloud.nacos.metrics.aop.interceptor;
 import feign.*;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.concurrent.TimeUnit;
 
 public class OpenFeignInterceptor implements ResponseInterceptor, RequestInterceptor {
 
-    @Autowired
-    private PrometheusMeterRegistry prometheusMeterRegistry;
-    RequestTemplate request;
-    @Override
-    public Object intercept(InvocationContext invocationContext, Chain chain) throws Exception {
+	@Autowired
+	private PrometheusMeterRegistry prometheusMeterRegistry;
+	RequestTemplate request;
 
-        Response response = invocationContext.response();
+	@Override
+	public Object intercept(InvocationContext invocationContext, Chain chain) throws Exception {
 
-        Counter qpsCounter = Counter.builder("spring-cloud.rpc.openfeign.qps")
-                .description("Spring Cloud Alibaba QPS metrics when use OpenFeign RPC Call.")
-                .baseUnit(TimeUnit.SECONDS.name())
-                .tag("sca.openfeign.rpc", "url: " + request.url()
-                        + "  method: " + request.method()
-                        + "  status: " + response.status())
-                .register(prometheusMeterRegistry);
+		Response response = invocationContext.response();
 
-        qpsCounter.increment();
+		Counter qpsCounter = Counter.builder("spring-cloud.rpc.openfeign.qps")
+				.description("Spring Cloud Alibaba QPS metrics when use OpenFeign RPC Call.")
+				.baseUnit(TimeUnit.SECONDS.name())
+				.tag("sca.openfeign.rpc", "url: " + request.url()
+						+ "  method: " + request.method()
+						+ "  status: " + response.status())
+				.register(prometheusMeterRegistry);
 
-        return null;
-    }
+		qpsCounter.increment();
 
-    @Override
-    public ResponseInterceptor andThen(ResponseInterceptor nextInterceptor) {
-        return ResponseInterceptor.super.andThen(nextInterceptor);
-    }
+		return null;
+	}
 
-    @Override
-    public Chain apply(Chain chain) {
-        return ResponseInterceptor.super.apply(chain);
-    }
+	@Override
+	public ResponseInterceptor andThen(ResponseInterceptor nextInterceptor) {
+		return ResponseInterceptor.super.andThen(nextInterceptor);
+	}
 
-    @Override
-    public void apply(RequestTemplate requestTemplate) {
-        this.request = requestTemplate;
-    }
+	@Override
+	public Chain apply(Chain chain) {
+		return ResponseInterceptor.super.apply(chain);
+	}
+
+	@Override
+	public void apply(RequestTemplate requestTemplate) {
+		this.request = requestTemplate;
+	}
 }

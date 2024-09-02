@@ -23,6 +23,7 @@ import com.alibaba.cloud.nacos.metrics.aop.interceptor.OpenFeignInterceptor;
 import com.alibaba.cloud.nacos.metrics.aop.interceptor.ReactiveInterceptor;
 import com.alibaba.cloud.nacos.metrics.aop.interceptor.RestTemplateInterceptor;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
+
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -39,53 +40,53 @@ import org.springframework.web.reactive.function.client.WebClient;
 @ConditionalOnNacosDiscoveryEnabled
 public class NacosMetricsAutoConfiguration {
 
-    @ConditionalOnClass(WebClient.class)
-    @ConditionalOnBean(WebClient.Builder.class)
-    protected static class NacosMetricsReactiveConfiguration {
+	@ConditionalOnClass(WebClient.class)
+	@ConditionalOnBean(WebClient.Builder.class)
+	protected static class NacosMetricsReactiveConfiguration {
 
-        @Bean
-        @ConditionalOnMissingBean
-        public ReactiveInterceptor reactiveInterceptor() {
-            return new ReactiveInterceptor();
-        }
+		@Bean
+		@ConditionalOnMissingBean
+		public ReactiveInterceptor reactiveInterceptor() {
+			return new ReactiveInterceptor();
+		}
 
-        @Bean
-        public ReactiveBeanPostProcessor reactiveBeanPostProcessor() {
-            return new ReactiveBeanPostProcessor();
-        }
-    }
+		@Bean
+		public ReactiveBeanPostProcessor reactiveBeanPostProcessor() {
+			return new ReactiveBeanPostProcessor();
+		}
+	}
 
-    @ConditionalOnClass(RestTemplate.class)
-    @ConditionalOnBean(RestTemplate.class)
-    protected static class NacosMetricsRestConfiguration {
+	@ConditionalOnClass(RestTemplate.class)
+	@ConditionalOnBean(RestTemplate.class)
+	protected static class NacosMetricsRestConfiguration {
 
-        @Bean
-        @ConditionalOnMissingBean
-        public RestTemplateInterceptor restTemplateInterceptor() {
-            return new RestTemplateInterceptor();
-        }
+		@Bean
+		@ConditionalOnMissingBean
+		public RestTemplateInterceptor restTemplateInterceptor() {
+			return new RestTemplateInterceptor();
+		}
 
-        @Bean
-        public RestBeanPostProcessor restBeanPostProcessor() {
-            return new RestBeanPostProcessor();
-        }
-    }
+		@Bean
+		public RestBeanPostProcessor restBeanPostProcessor() {
+			return new RestBeanPostProcessor();
+		}
+	}
 
-    @ConditionalOnClass(RestTemplate.class)
-    @ConditionalOnBean(RestTemplate.class)
-    protected static class NacosMetricsOpenFeignConfiguration {
+	@ConditionalOnClass(RestTemplate.class)
+	@ConditionalOnBean(RestTemplate.class)
+	protected static class NacosMetricsOpenFeignConfiguration {
 
-        @Bean
-        @ConditionalOnMissingBean
-        public OpenFeignInterceptor openFeignInterceptor() {
-            return new OpenFeignInterceptor();
-        }
+		@Bean
+		@ConditionalOnMissingBean
+		public OpenFeignInterceptor openFeignInterceptor() {
+			return new OpenFeignInterceptor();
+		}
 
-    }
+	}
 
-    @Bean
-    InitializingBean forcePrometheusPostProcessor(BeanPostProcessor meterRegistryPostProcessor, PrometheusMeterRegistry registry) {
-        return () -> meterRegistryPostProcessor.postProcessAfterInitialization(registry, "");
-    }
+	@Bean
+	InitializingBean forcePrometheusPostProcessor(BeanPostProcessor meterRegistryPostProcessor, PrometheusMeterRegistry registry) {
+		return () -> meterRegistryPostProcessor.postProcessAfterInitialization(registry, "");
+	}
 
 }

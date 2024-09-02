@@ -19,60 +19,59 @@ package com.alibaba.cloud.nacos.metrics.aop.interceptor;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.client.reactive.ClientHttpRequest;
-import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.client.ClientRequest;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.ExchangeFunction;
+
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class ReactiveInterceptor implements ExchangeFilterFunction {
 
-    @Autowired
-    private PrometheusMeterRegistry prometheusMeterRegistry;
+	@Autowired
+	private PrometheusMeterRegistry prometheusMeterRegistry;
 
-    @Override
-    public Mono<ClientResponse> filter(ClientRequest request, ExchangeFunction next) {
+	@Override
+	public Mono<ClientResponse> filter(ClientRequest request, ExchangeFunction next) {
 
-        HttpMethod method = request.method();
-        URI url = request.url();
+		HttpMethod method = request.method();
+		URI url = request.url();
 
-        return next.exchange(request)
-                .doOnSuccess(response -> {
-                    Counter qpsCounter = Counter.builder("spring-cloud.rpc.reactive.qps")
-                            .description("Spring Cloud Alibaba QPS metrics when use Reactive RPC Call.")
-                            .baseUnit(TimeUnit.SECONDS.name())
-                            .tag("sca.reactive.rpc.method", method.name())
-                            .tag("sca.reactive.rpc", "url: " + url
-                                    + "  method: " + method.name()
-                                    + "  status: " + response.statusCode())
-                            .register(prometheusMeterRegistry);
+		return next.exchange(request)
+				.doOnSuccess(response -> {
+					Counter qpsCounter = Counter.builder("spring-cloud.rpc.reactive.qps")
+							.description("Spring Cloud Alibaba QPS metrics when use Reactive RPC Call.")
+							.baseUnit(TimeUnit.SECONDS.name())
+							.tag("sca.reactive.rpc.method", method.name())
+							.tag("sca.reactive.rpc", "url: " + url
+									+ "  method: " + method.name()
+									+ "  status: " + response.statusCode())
+							.register(prometheusMeterRegistry);
 
-                    qpsCounter.increment();
+					qpsCounter.increment();
 
-                    response.bodyToMono(String.class)
-                            .doOnNext(System.out::println)
-                            .subscribe();
-                })
-                .doOnError(error -> {
-                });
+					response.bodyToMono(String.class)
+							.doOnNext(System.out::println)
+							.subscribe();
+				})
+				.doOnError(error -> {
+				});
 
-    }
+	}
 
-    @Override
-    public ExchangeFilterFunction andThen(ExchangeFilterFunction afterFilter) {
-        return ExchangeFilterFunction.super.andThen(afterFilter);
-    }
+	@Override
+	public ExchangeFilterFunction andThen(ExchangeFilterFunction afterFilter) {
+		return ExchangeFilterFunction.super.andThen(afterFilter);
+	}
 
-    @Override
-    public ExchangeFunction apply(ExchangeFunction exchange) {
-        return ExchangeFilterFunction.super.apply(exchange);
-    }
+	@Override
+	public ExchangeFunction apply(ExchangeFunction exchange) {
+		return ExchangeFilterFunction.super.apply(exchange);
+	}
 }

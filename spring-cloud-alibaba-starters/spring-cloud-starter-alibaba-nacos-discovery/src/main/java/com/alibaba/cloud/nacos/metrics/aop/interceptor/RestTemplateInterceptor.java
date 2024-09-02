@@ -18,6 +18,7 @@ package com.alibaba.cloud.nacos.metrics.aop.interceptor;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
@@ -27,31 +28,32 @@ import org.springframework.http.client.ClientHttpResponse;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-public class RestTemplateInterceptor implements ClientHttpRequestInterceptor{
+public class RestTemplateInterceptor implements ClientHttpRequestInterceptor {
 
-    @Autowired
-    private PrometheusMeterRegistry prometheusMeterRegistry;
+	@Autowired
+	private PrometheusMeterRegistry prometheusMeterRegistry;
 
-    private Counter qpsCounter;
-    @Override
-    public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
+	private Counter qpsCounter;
 
-        ClientHttpResponse response = execution.execute(request, body);
+	@Override
+	public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
 
-
-         qpsCounter = Counter.builder("spring-cloud.rpc.restTemplate.qps")
-                .description("Spring Cloud Alibaba QPS metrics when use resTemplate RPC Call.")
-                .baseUnit(TimeUnit.SECONDS.name())
-                .tag("sca.resTemplate.rpc", "url: " + request.getURI()
-                        + "  method: " + request.getMethod()
-                        + "  status: " + response.getStatusCode())
-                .register(prometheusMeterRegistry);
+		ClientHttpResponse response = execution.execute(request, body);
 
 
-        qpsCounter.increment();
+		qpsCounter = Counter.builder("spring-cloud.rpc.restTemplate.qps")
+				.description("Spring Cloud Alibaba QPS metrics when use resTemplate RPC Call.")
+				.baseUnit(TimeUnit.SECONDS.name())
+				.tag("sca.resTemplate.rpc", "url: " + request.getURI()
+						+ "  method: " + request.getMethod()
+						+ "  status: " + response.getStatusCode())
+				.register(prometheusMeterRegistry);
 
-        return response;
 
-    }
+		qpsCounter.increment();
+
+		return response;
+
+	}
 
 }

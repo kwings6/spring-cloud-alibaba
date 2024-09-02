@@ -17,6 +17,7 @@
 package com.alibaba.cloud.nacos.metrics.aop;
 
 import com.alibaba.cloud.nacos.metrics.aop.interceptor.RestTemplateInterceptor;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -25,19 +26,20 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
 
 public class RestBeanPostProcessor implements BeanPostProcessor {
-    @Autowired
-    private RestTemplateInterceptor restTemplateInterceptor;
-    @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        return BeanPostProcessor.super.postProcessBeforeInitialization(bean, beanName);
-    }
+	@Autowired
+	private RestTemplateInterceptor restTemplateInterceptor;
 
-    @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        if (bean instanceof RestTemplate) {
-            RestTemplate restTemplate= (RestTemplate) bean;
-            restTemplate.setInterceptors(Arrays.asList(restTemplateInterceptor));
-        }
-        return bean;
-    }
+	@Override
+	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+		return BeanPostProcessor.super.postProcessBeforeInitialization(bean, beanName);
+	}
+
+	@Override
+	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+		if (bean instanceof RestTemplate) {
+			RestTemplate restTemplate = (RestTemplate) bean;
+			restTemplate.setInterceptors(Arrays.asList(restTemplateInterceptor));
+		}
+		return bean;
+	}
 }
