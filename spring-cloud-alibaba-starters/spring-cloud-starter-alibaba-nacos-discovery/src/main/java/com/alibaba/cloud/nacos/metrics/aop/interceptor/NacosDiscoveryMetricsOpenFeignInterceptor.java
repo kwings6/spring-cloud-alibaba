@@ -27,7 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.concurrent.TimeUnit;
 
-public class OpenFeignInterceptor implements ResponseInterceptor, RequestInterceptor {
+public class NacosDiscoveryMetricsOpenFeignInterceptor implements ResponseInterceptor, RequestInterceptor {
 
 	@Autowired
 	private PrometheusMeterRegistry prometheusMeterRegistry;

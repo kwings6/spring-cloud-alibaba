@@ -31,7 +31,7 @@ import reactor.core.publisher.Mono;
 import java.net.URI;
 import java.util.concurrent.TimeUnit;
 
-public class ReactiveInterceptor implements ExchangeFilterFunction {
+public class NacosDiscoveryMetricsReactiveInterceptor implements ExchangeFilterFunction {
 
 	@Autowired
 	private PrometheusMeterRegistry prometheusMeterRegistry;

@@ -19,6 +19,9 @@ package com.alibaba.cloud.examples;
 import java.util.Random;
 
 import io.seata.core.context.RootContext;
+import io.seata.core.exception.TransactionException;
+import io.seata.tm.api.GlobalTransaction;
+import io.seata.tm.api.GlobalTransactionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,8 +51,12 @@ public class AccountController {
 	}
 
 	@PostMapping(value = "/account", produces = "application/json")
-	public String account(String userId, int money) {
+	public String account(String userId, int money) throws TransactionException {
 		LOGGER.info("Account Service ... xid: " + RootContext.getXID());
+
+		GlobalTransaction globalTransaction = GlobalTransactionContext.getCurrent();
+		LOGGER.info("Account Service ... localstatus: " + globalTransaction.getLocalStatus());
+		LOGGER.info("Account Service ... status: " + globalTransaction.getStatus());
 
 		if (random.nextBoolean()) {
 			throw new RuntimeException("this is a mock Exception");

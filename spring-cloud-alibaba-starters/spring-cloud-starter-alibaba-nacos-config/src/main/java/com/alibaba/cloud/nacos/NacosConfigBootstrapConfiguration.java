@@ -67,5 +67,4 @@ public class NacosConfigBootstrapConfiguration {
 		// Minimize te possibility of making mistakes.
 		return new SmartConfigurationPropertiesRebinder(beans);
 	}
-
 }

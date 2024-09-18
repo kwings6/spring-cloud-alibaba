@@ -28,6 +28,7 @@ import com.alibaba.cloud.stream.binder.rocketmq.properties.RocketMQExtendedBindi
 import com.alibaba.cloud.stream.binder.rocketmq.properties.RocketMQProducerProperties;
 import com.alibaba.cloud.stream.binder.rocketmq.provisioning.RocketMQTopicProvisioner;
 import com.alibaba.cloud.stream.binder.rocketmq.utils.RocketMQUtils;
+import io.micrometer.prometheus.PrometheusMeterRegistry;
 import org.apache.rocketmq.remoting.protocol.NamespaceUtil;
 
 import org.springframework.cloud.stream.binder.AbstractMessageChannelBinder;
@@ -65,13 +66,17 @@ public class RocketMQMessageChannelBinder extends
 
 	private final RocketMQBinderConfigurationProperties binderConfigurationProperties;
 
+	private final PrometheusMeterRegistry meterRegistry;
+
 	public RocketMQMessageChannelBinder(
 			RocketMQBinderConfigurationProperties binderConfigurationProperties,
 			RocketMQExtendedBindingProperties extendedBindingProperties,
-			RocketMQTopicProvisioner provisioningProvider) {
+			RocketMQTopicProvisioner provisioningProvider,
+			PrometheusMeterRegistry meterRegistry) {
 		super(new String[0], provisioningProvider);
 		this.extendedBindingProperties = extendedBindingProperties;
 		this.binderConfigurationProperties = binderConfigurationProperties;
+		this.meterRegistry = meterRegistry;
 	}
 
 	@Override
@@ -86,7 +91,7 @@ public class RocketMQMessageChannelBinder extends
 				.mergeRocketMQProperties(binderConfigurationProperties,
 						extendedProducerProperties.getExtension());
 		RocketMQProducerMessageHandler messageHandler = new RocketMQProducerMessageHandler(
-				destination, extendedProducerProperties, mqProducerProperties);
+				destination, extendedProducerProperties, mqProducerProperties, meterRegistry);
 		messageHandler.setApplicationContext(this.getApplicationContext());
 		if (errorChannel != null) {
 			messageHandler.setSendFailureChannel(errorChannel);

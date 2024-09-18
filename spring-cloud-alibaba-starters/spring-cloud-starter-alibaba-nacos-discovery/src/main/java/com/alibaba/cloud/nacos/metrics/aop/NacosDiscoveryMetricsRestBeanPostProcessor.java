@@ -15,27 +15,30 @@
  */
 package com.alibaba.cloud.nacos.metrics.aop;
 
-import com.alibaba.cloud.nacos.metrics.aop.interceptor.ReactiveInterceptor;
+import java.util.Arrays;
+
+import com.alibaba.cloud.nacos.metrics.aop.interceptor.NacosDiscoveryMetricsRestTemplateInterceptor;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestTemplate;
 
-public class ReactiveBeanPostProcessor implements BeanPostProcessor {
+
+public class NacosDiscoveryMetricsRestBeanPostProcessor implements BeanPostProcessor {
 	@Autowired
-	private ReactiveInterceptor reactiveInterceptor;
+	private NacosDiscoveryMetricsRestTemplateInterceptor restTemplateInterceptor;
 
 	@Override
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-		return bean;
+		return BeanPostProcessor.super.postProcessBeforeInitialization(bean, beanName);
 	}
 
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-		if (bean instanceof WebClient.Builder) {
-			WebClient.Builder builder = (WebClient.Builder) bean;
-			builder.filter(reactiveInterceptor);
+		if (bean instanceof RestTemplate) {
+			RestTemplate restTemplate = (RestTemplate) bean;
+			restTemplate.setInterceptors(Arrays.asList(restTemplateInterceptor));
 		}
 		return bean;
 	}

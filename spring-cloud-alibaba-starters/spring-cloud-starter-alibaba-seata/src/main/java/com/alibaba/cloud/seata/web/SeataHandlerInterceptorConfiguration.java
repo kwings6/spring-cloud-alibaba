@@ -16,7 +16,11 @@
 
 package com.alibaba.cloud.seata.web;
 
+import io.micrometer.prometheus.PrometheusMeterRegistry;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -26,9 +30,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ConditionalOnWebApplication
 public class SeataHandlerInterceptorConfiguration implements WebMvcConfigurer {
 
+	@Autowired
+	SeataHandlerInterceptor seataHandlerInterceptor;
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new SeataHandlerInterceptor()).addPathPatterns("/**");
+		registry.addInterceptor(seataHandlerInterceptor).addPathPatterns("/**");
 	}
+
 
 }

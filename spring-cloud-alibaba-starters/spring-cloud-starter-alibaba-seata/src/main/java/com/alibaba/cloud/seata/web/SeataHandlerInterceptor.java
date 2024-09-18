@@ -16,34 +16,68 @@
 
 package com.alibaba.cloud.seata.web;
 
+import java.util.concurrent.TimeUnit;
+
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Timer;
+import io.micrometer.prometheus.PrometheusMeterRegistry;
 import io.seata.common.util.StringUtils;
 import io.seata.core.context.RootContext;
+import io.seata.core.exception.TransactionException;
+import io.seata.core.model.GlobalStatus;
+import io.seata.rm.AbstractRMHandler;
+import io.seata.rm.DefaultResourceManager;
+import io.seata.tm.api.GlobalTransaction;
+import io.seata.tm.api.GlobalTransactionContext;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
  * @author xiaojing
- *
+ * <p>
  * Seata HandlerInterceptor, Convert Seata information into
  * @see io.seata.core.context.RootContext from http request's header in
  * {@link org.springframework.web.servlet.HandlerInterceptor#preHandle(HttpServletRequest, HttpServletResponse, Object)},
  * And clean up Seata information after servlet method invocation in
  * {@link org.springframework.web.servlet.HandlerInterceptor#afterCompletion(HttpServletRequest, HttpServletResponse, Object, Exception)}
  */
+
 public class SeataHandlerInterceptor implements HandlerInterceptor {
+	@Autowired
+	private PrometheusMeterRegistry prometheusMeterRegistry;
+
+	private Counter transSumCounter;
+
+//	private Timer transTimer  = Timer.builder("spring-cloud.seata.transaction.time")
+//			.description("Spring Cloud Alibaba Seata global transaction time.")
+//			.register(prometheusMeterRegistry);
+
+
+	private Timer.Sample trancsTimerSample;
 
 	private static final Logger log = LoggerFactory
 			.getLogger(SeataHandlerInterceptor.class);
 
+	GlobalTransaction globalTransaction;
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
 			Object handler) {
+
+		transSumCounter = Counter.builder("spring-cloud.seata.transaction.counter")
+				.description("Spring Cloud Alibaba Seata global transaction sum.")
+				.register(prometheusMeterRegistry);
 		String xid = RootContext.getXID();
 		String rpcXid = request.getHeader(RootContext.KEY_XID);
+
+
 		if (log.isDebugEnabled()) {
 			log.debug("xid in RootContext {} xid in RpcContext {}", xid, rpcXid);
 		}
@@ -55,20 +89,45 @@ public class SeataHandlerInterceptor implements HandlerInterceptor {
 			}
 		}
 
+
+		transSumCounter.increment();
+
+		trancsTimerSample = Timer.start(prometheusMeterRegistry);
+
 		return true;
 	}
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
 			Object handler, Exception e) {
+		trancsTimerSample.stop(prometheusMeterRegistry.timer("spring-cloud.seata.transaction.time"));
+
+		Counter transFailedCounter = null;
+
+
+
+//		transFailedCounter = Counter.builder("spring-cloud.seata.transaction.failed.counter")
+//				.description("spring-cloud.seata.transaction.status")
+//				.tag("status", status.name())
+//				.register(prometheusMeterRegistry);
+
+
+//		transFailedCounter.increment();
+
+
 		if (StringUtils.isNotBlank(RootContext.getXID())) {
+
 			String rpcXid = request.getHeader(RootContext.KEY_XID);
+
+
 
 			if (StringUtils.isEmpty(rpcXid)) {
 				return;
 			}
 
 			String unbindXid = RootContext.unbind();
+
+
 			if (log.isDebugEnabled()) {
 				log.debug("unbind {} from RootContext", unbindXid);
 			}
@@ -79,6 +138,8 @@ public class SeataHandlerInterceptor implements HandlerInterceptor {
 					log.warn("bind {} back to RootContext", unbindXid);
 				}
 			}
+
+
 		}
 	}
 

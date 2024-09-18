@@ -30,6 +30,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.function.StreamBridge;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
@@ -44,6 +45,7 @@ public class RocketMQBroadcastProducerApplication {
 			.getLogger(RocketMQBroadcastProducerApplication.class);
 	@Autowired
 	private StreamBridge streamBridge;
+
 	public static void main(String[] args) {
 		SpringApplication.run(RocketMQBroadcastProducerApplication.class, args);
 	}

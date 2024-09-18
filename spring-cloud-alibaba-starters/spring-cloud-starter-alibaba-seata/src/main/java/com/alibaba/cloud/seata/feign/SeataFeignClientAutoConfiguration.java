@@ -35,7 +35,7 @@ public class SeataFeignClientAutoConfiguration {
 		return new SeataFeignBuilderBeanPostProcessor();
 	}
 
-	@Bean
+	@Bean(name = "seataFeignRequestInterceptor")
 	public SeataFeignRequestInterceptor seataFeignRequestInterceptor() {
 		return new SeataFeignRequestInterceptor();
 	}

@@ -18,8 +18,15 @@ package com.alibaba.cloud.seata.rest;
 
 import java.io.IOException;
 
+import com.alibaba.cloud.seata.feign.SeataFeignBuilderBeanPostProcessor;
+import com.alibaba.cloud.seata.web.SeataHandlerInterceptor;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.prometheus.PrometheusMeterRegistry;
 import io.seata.core.context.RootContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
@@ -32,6 +39,7 @@ import org.springframework.util.StringUtils;
  */
 public class SeataRestTemplateInterceptor implements ClientHttpRequestInterceptor {
 
+
 	@Override
 	public ClientHttpResponse intercept(HttpRequest httpRequest, byte[] bytes,
 			ClientHttpRequestExecution clientHttpRequestExecution) throws IOException {
@@ -42,6 +50,8 @@ public class SeataRestTemplateInterceptor implements ClientHttpRequestIntercepto
 		if (StringUtils.hasLength(xid)) {
 			requestWrapper.getHeaders().add(RootContext.KEY_XID, xid);
 		}
+
+
 		return clientHttpRequestExecution.execute(requestWrapper, bytes);
 	}
 

@@ -22,9 +22,12 @@ import com.alibaba.cloud.stream.binder.rocketmq.constant.RocketMQConst;
 import com.alibaba.cloud.stream.binder.rocketmq.custom.RocketMQBeanContainerCache;
 import com.alibaba.cloud.stream.binder.rocketmq.metrics.Instrumentation;
 import com.alibaba.cloud.stream.binder.rocketmq.metrics.InstrumentationManager;
+import com.alibaba.cloud.stream.binder.rocketmq.metrics.MessageMeter;
 import com.alibaba.cloud.stream.binder.rocketmq.properties.RocketMQProducerProperties;
 import com.alibaba.cloud.stream.binder.rocketmq.provisioning.selector.PartitionMessageQueueSelector;
 import com.alibaba.cloud.stream.binder.rocketmq.support.RocketMQMessageConverterSupport;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.prometheus.PrometheusMeterRegistry;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
@@ -80,12 +83,15 @@ public class RocketMQProducerMessageHandler extends AbstractMessageHandler
 
 	private final RocketMQProducerProperties mqProducerProperties;
 
+	private final PrometheusMeterRegistry meterRegistry;
+
 	public RocketMQProducerMessageHandler(ProducerDestination destination,
 			ExtendedProducerProperties<RocketMQProducerProperties> extendedProducerProperties,
-			RocketMQProducerProperties mqProducerProperties) {
+			RocketMQProducerProperties mqProducerProperties, PrometheusMeterRegistry meterRegistry) {
 		this.destination = destination;
 		this.extendedProducerProperties = extendedProducerProperties;
 		this.mqProducerProperties = mqProducerProperties;
+		this.meterRegistry = meterRegistry;
 	}
 
 	@Override
@@ -175,6 +181,9 @@ public class RocketMQProducerMessageHandler extends AbstractMessageHandler
 				}
 				sendResult = defaultMQProducer.sendMessageInTransaction(mqMessage,
 						message.getHeaders().get(RocketMQConst.USER_TRANSACTIONAL_ARGS));
+				Counter messageCounter = MessageMeter.getMQCounter(destination.getName(),
+						mqProducerProperties, meterRegistry);
+				messageCounter.increment();
 			}
 			else {
 				if (log.isDebugEnabled()) {
@@ -182,6 +191,9 @@ public class RocketMQProducerMessageHandler extends AbstractMessageHandler
 				}
 				sendResult = this.send(mqMessage, this.messageQueueSelector,
 						message.getHeaders(), message);
+				Counter messageCounter = MessageMeter.getMQCounter(destination.getName(),
+						mqProducerProperties, meterRegistry);
+				messageCounter.increment();
 			}
 			if (log.isDebugEnabled()) {
 				log.debug("the message has sent,message={},sendResult={}", mqMessage,
@@ -210,6 +222,7 @@ public class RocketMQProducerMessageHandler extends AbstractMessageHandler
 		sendResult.setSendStatus(SendStatus.SEND_OK);
 		if (RocketMQProducerProperties.SendType.OneWay
 				.equalsName(mqProducerProperties.getSendType())) {
+
 			if (null != selector) {
 				defaultMQProducer.sendOneway(mqMessage, selector, args);
 			}

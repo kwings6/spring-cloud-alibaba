@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 
-public class RestTemplateInterceptor implements ClientHttpRequestInterceptor {
+public class NacosDiscoveryMetricsRestTemplateInterceptor implements ClientHttpRequestInterceptor {
 
 	@Autowired
 	private PrometheusMeterRegistry prometheusMeterRegistry;
