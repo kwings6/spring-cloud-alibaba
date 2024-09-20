@@ -9,7 +9,7 @@ spring:
         definition: consumer;
       rocketmq:
         binder:
-          name-server: localhost:9876
+          name-server: localhost:9877
         bindings:
           producer-out-0:
             producer:

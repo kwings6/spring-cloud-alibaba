@@ -21,9 +21,12 @@ import java.util.function.Supplier;
 
 import com.alibaba.cloud.stream.binder.rocketmq.metrics.Instrumentation;
 import com.alibaba.cloud.stream.binder.rocketmq.metrics.InstrumentationManager;
+import com.alibaba.cloud.stream.binder.rocketmq.metrics.MessageMeter;
 import com.alibaba.cloud.stream.binder.rocketmq.properties.RocketMQConsumerProperties;
 import com.alibaba.cloud.stream.binder.rocketmq.support.RocketMQMessageConverterSupport;
 import com.alibaba.cloud.stream.binder.rocketmq.utils.RocketMQUtils;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.prometheus.PrometheusMeterRegistry;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyStatus;
@@ -66,10 +69,14 @@ public class RocketMQInboundChannelAdapter extends MessageProducerSupport
 
 	private final ExtendedConsumerProperties<RocketMQConsumerProperties> extendedConsumerProperties;
 
+	private PrometheusMeterRegistry prometheusMeterRegistry;
+
 	public RocketMQInboundChannelAdapter(String topic,
-			ExtendedConsumerProperties<RocketMQConsumerProperties> extendedConsumerProperties) {
+			ExtendedConsumerProperties<RocketMQConsumerProperties> extendedConsumerProperties,
+			PrometheusMeterRegistry prometheusMeterRegistry) {
 		this.topic = topic;
 		this.extendedConsumerProperties = extendedConsumerProperties;
+		this.prometheusMeterRegistry = prometheusMeterRegistry;
 	}
 
 	@Override
@@ -155,6 +162,8 @@ public class RocketMQInboundChannelAdapter extends MessageProducerSupport
 					"DefaultMQPushConsumer consuming failed, Caused by messageExtList is empty");
 		}
 		for (MessageExt messageExt : messageExtList) {
+			Counter counter = MessageMeter.getMQConsumerSumCounter(topic, prometheusMeterRegistry);
+			counter.increment();
 			try {
 				Message<?> message = RocketMQMessageConverterSupport
 						.convertMessage2Spring(messageExt);

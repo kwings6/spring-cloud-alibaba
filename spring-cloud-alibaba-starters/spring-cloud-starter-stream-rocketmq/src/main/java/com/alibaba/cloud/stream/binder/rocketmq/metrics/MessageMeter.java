@@ -18,6 +18,7 @@ package com.alibaba.cloud.stream.binder.rocketmq.metrics;
 
 import com.alibaba.cloud.stream.binder.rocketmq.properties.RocketMQProducerProperties;
 import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.DistributionSummary;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
 
 /**
@@ -25,24 +26,60 @@ import io.micrometer.prometheus.PrometheusMeterRegistry;
  */
 public class MessageMeter {
 
-	public static Counter getMQCounter(String topic, RocketMQProducerProperties producerProperties,
-			PrometheusMeterRegistry prometheusMeterRegistry){
-		return Counter.builder("spring-cloud.rocketmq.message.sum")
-				.description("Spring Cloud Alibaba RocketMQ Message Sum")
-				.tag("topic", topic)
+	public static DistributionSummary getMQProducerSumCounter(String destination,RocketMQProducerProperties producerProperties,
+			PrometheusMeterRegistry prometheusMeterRegistry) {
+		return DistributionSummary.builder("spring.cloud.alibaba.rocketmq.producer.message.sum")
+				.description("Spring Cloud Alibaba RocketMQ Producer Message Sum")
+				.tag("destination", destination)
 				.tag("nameServer", producerProperties.getGroup())
 				.tag("group", producerProperties.getGroup())
 				.tag("producerType", producerProperties.getProducerType())
-				.tag("producerType", producerProperties.getProducerType())
 				.tag("sendType", producerProperties.getSendType())
-				.tag("sendCallBack", producerProperties.getSendCallBack())
-				.tag("transactionListener", producerProperties.getTransactionListener())
-				.tag("messageQueueSelector", producerProperties.getMessageQueueSelector())
-				.tag("sendFailureChannel", producerProperties.getSendFailureChannel())
-				.tag("errorMessageStrategy", producerProperties.getErrorMessageStrategy())
+//				.tag("sendCallBack", producerProperties.getSendCallBack())
+//				.tag("transactionListener", producerProperties.getTransactionListener())
+//				.tag("messageQueueSelector", producerProperties.getMessageQueueSelector())
+//				.tag("sendFailureChannel", producerProperties.getSendFailureChannel())
+//				.tag("errorMessageStrategy", producerProperties.getErrorMessageStrategy())
 				.tag("accessChannel", producerProperties.getAccessChannel())
 				.register(prometheusMeterRegistry);
 	}
 
+	public static DistributionSummary getMQProducerFailCounter(RocketMQProducerProperties producerProperties,
+			PrometheusMeterRegistry prometheusMeterRegistry) {
+		return DistributionSummary.builder("spring.cloud.alibaba.rocketmq.producer.message.fail.sum")
+				.description("Spring Cloud Alibaba RocketMQ Producer Message Fail Sum")
+				.tag("nameServer", producerProperties.getGroup())
+				.tag("group", producerProperties.getGroup())
+				.tag("producerType", producerProperties.getProducerType())
+				.tag("sendType", producerProperties.getSendType())
+//				.tag("sendCallBack", producerProperties.getSendCallBack())
+//				.tag("transactionListener", producerProperties.getTransactionListener())
+//				.tag("messageQueueSelector", producerProperties.getMessageQueueSelector())
+//				.tag("sendFailureChannel", producerProperties.getSendFailureChannel())
+//				.tag("errorMessageStrategy", producerProperties.getErrorMessageStrategy())
+				.tag("accessChannel", producerProperties.getAccessChannel())
+				.register(prometheusMeterRegistry);
 
+//		return Counter.builder("spring-cloud.rocketmq.message.sum")
+//				.description("Spring Cloud Alibaba RocketMQ Message Sum")
+//				.tag("nameServer", producerProperties.getGroup())
+//				.tag("group", producerProperties.getGroup())
+//				.tag("producerType", producerProperties.getProducerType())
+//				.tag("sendType", producerProperties.getSendType())
+////				.tag("sendCallBack", producerProperties.getSendCallBack())
+////				.tag("transactionListener", producerProperties.getTransactionListener())
+////				.tag("messageQueueSelector", producerProperties.getMessageQueueSelector())
+////				.tag("sendFailureChannel", producerProperties.getSendFailureChannel())
+////				.tag("errorMessageStrategy", producerProperties.getErrorMessageStrategy())
+//				.tag("accessChannel", producerProperties.getAccessChannel())
+//				.register(prometheusMeterRegistry);
+	}
+
+
+	public static Counter getMQConsumerSumCounter(String topic, PrometheusMeterRegistry prometheusMeterRegistry) {
+		return Counter.builder("spring.cloud.alibaba.rocketmq.consumer.message.success.sum")
+				.description("Spring Cloud Alibaba RocketMQ Message Consumer Success Sum")
+				.tag("topic", topic)
+				.register(prometheusMeterRegistry);
+			}
 }

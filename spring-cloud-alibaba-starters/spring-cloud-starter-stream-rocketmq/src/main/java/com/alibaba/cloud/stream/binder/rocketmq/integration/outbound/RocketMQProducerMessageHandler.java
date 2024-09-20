@@ -27,6 +27,7 @@ import com.alibaba.cloud.stream.binder.rocketmq.properties.RocketMQProducerPrope
 import com.alibaba.cloud.stream.binder.rocketmq.provisioning.selector.PartitionMessageQueueSelector;
 import com.alibaba.cloud.stream.binder.rocketmq.support.RocketMQMessageConverterSupport;
 import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.DistributionSummary;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
@@ -83,11 +84,12 @@ public class RocketMQProducerMessageHandler extends AbstractMessageHandler
 
 	private final RocketMQProducerProperties mqProducerProperties;
 
-	private final PrometheusMeterRegistry meterRegistry;
+	private PrometheusMeterRegistry meterRegistry;
 
 	public RocketMQProducerMessageHandler(ProducerDestination destination,
 			ExtendedProducerProperties<RocketMQProducerProperties> extendedProducerProperties,
-			RocketMQProducerProperties mqProducerProperties, PrometheusMeterRegistry meterRegistry) {
+			RocketMQProducerProperties mqProducerProperties,
+			PrometheusMeterRegistry meterRegistry) {
 		this.destination = destination;
 		this.extendedProducerProperties = extendedProducerProperties;
 		this.mqProducerProperties = mqProducerProperties;
@@ -181,9 +183,8 @@ public class RocketMQProducerMessageHandler extends AbstractMessageHandler
 				}
 				sendResult = defaultMQProducer.sendMessageInTransaction(mqMessage,
 						message.getHeaders().get(RocketMQConst.USER_TRANSACTIONAL_ARGS));
-				Counter messageCounter = MessageMeter.getMQCounter(destination.getName(),
-						mqProducerProperties, meterRegistry);
-				messageCounter.increment();
+				DistributionSummary distributionSummary = MessageMeter.getMQProducerSumCounter(destination.getName(), mqProducerProperties, meterRegistry);
+				distributionSummary.record(1);
 			}
 			else {
 				if (log.isDebugEnabled()) {
@@ -191,9 +192,8 @@ public class RocketMQProducerMessageHandler extends AbstractMessageHandler
 				}
 				sendResult = this.send(mqMessage, this.messageQueueSelector,
 						message.getHeaders(), message);
-				Counter messageCounter = MessageMeter.getMQCounter(destination.getName(),
-						mqProducerProperties, meterRegistry);
-				messageCounter.increment();
+				DistributionSummary distributionSummary = MessageMeter.getMQProducerSumCounter(destination.getName(),mqProducerProperties, meterRegistry);
+				distributionSummary.record(1);
 			}
 			if (log.isDebugEnabled()) {
 				log.debug("the message has sent,message={},sendResult={}", mqMessage,
@@ -222,7 +222,6 @@ public class RocketMQProducerMessageHandler extends AbstractMessageHandler
 		sendResult.setSendStatus(SendStatus.SEND_OK);
 		if (RocketMQProducerProperties.SendType.OneWay
 				.equalsName(mqProducerProperties.getSendType())) {
-
 			if (null != selector) {
 				defaultMQProducer.sendOneway(mqMessage, selector, args);
 			}
@@ -277,6 +276,8 @@ public class RocketMQProducerMessageHandler extends AbstractMessageHandler
 	}
 
 	private void doFail(Message<?> message, Throwable e) {
+		DistributionSummary distributionSummary = MessageMeter.getMQProducerFailCounter(mqProducerProperties, meterRegistry);
+		distributionSummary.record(1);
 		if (getSendFailureChannel() != null) {
 			getSendFailureChannel().send(getErrorMessageStrategy().buildErrorMessage(e,
 					ErrorMessageUtils.getAttributeAccessor(message, message)));
