@@ -68,6 +68,18 @@ public class RocketMQBinderAutoConfiguration {
 				extendedBindingProperties, provisioningProvider, meterRegistry);
 	}
 
+	@Bean
+	@ConditionalOnMissingBean
+	InitializingBean forcePrometheusPostProcessor(BeanPostProcessor meterRegistryPostProcessor, PrometheusMeterRegistry registry) {
+		return () -> meterRegistryPostProcessor.postProcessAfterInitialization(registry, "");
+	}
+
+	@Bean
+	@ConditionalOnMissingBean
+	public PrometheusMeterRegistry prometheusMeterRegistry() {
+		return new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
+	}
+
 	@Configuration(proxyBeanMethods = false)
 	@ConditionalOnClass(HealthIndicator.class)
 	@ConditionalOnEnabledHealthIndicator("rocketmq")
@@ -79,18 +91,5 @@ public class RocketMQBinderAutoConfiguration {
 		}
 
 	}
-
-	@Bean
-	@ConditionalOnMissingBean
-	InitializingBean forcePrometheusPostProcessor(BeanPostProcessor meterRegistryPostProcessor, PrometheusMeterRegistry registry) {
-		return () -> meterRegistryPostProcessor.postProcessAfterInitialization(registry, "");
-	}
-
-	@Bean
-	@ConditionalOnMissingBean
-	public PrometheusMeterRegistry prometheusMeterRegistry(){
-		return new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
-	}
-
 
 }

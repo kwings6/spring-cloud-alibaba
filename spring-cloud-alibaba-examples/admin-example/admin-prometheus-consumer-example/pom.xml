@@ -11,6 +11,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>admin-prometheus-consumer-example</artifactId>
+	<name>Spring Cloud Admin Prometheus Consumer Example</name>
+	<description>Example for Spring Cloud Alibaba Admin Consumer</description>
+	<packaging>jar</packaging>
 
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
@@ -72,7 +75,7 @@
 
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
-			<artifactId>rocketmq-example-common</artifactId>
+			<artifactId>admin-message-common</artifactId>
 			<version>${revision}</version>
 		</dependency>
 	</dependencies>

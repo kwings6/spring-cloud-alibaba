@@ -11,8 +11,8 @@
 
 
     <artifactId>nacos-discovery-consumer-example</artifactId>
-    <name>Spring Cloud Starter Alibaba Nacos Discovery Consumer Example</name>
-    <description>Example demonstrating how to use nacos discovery</description>
+    <name>Spring Cloud Admin Prometheus Consumer Example</name>
+    <description>Example for Spring Cloud Alibaba Admin Consumer</description>
     <packaging>jar</packaging>
 
 

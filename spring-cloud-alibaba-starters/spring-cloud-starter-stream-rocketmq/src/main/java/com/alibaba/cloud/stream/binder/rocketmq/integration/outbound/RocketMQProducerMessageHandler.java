@@ -26,7 +26,6 @@ import com.alibaba.cloud.stream.binder.rocketmq.metrics.MessageMeter;
 import com.alibaba.cloud.stream.binder.rocketmq.properties.RocketMQProducerProperties;
 import com.alibaba.cloud.stream.binder.rocketmq.provisioning.selector.PartitionMessageQueueSelector;
 import com.alibaba.cloud.stream.binder.rocketmq.support.RocketMQMessageConverterSupport;
-import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.DistributionSummary;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
 import org.apache.rocketmq.client.exception.MQBrokerException;
@@ -192,7 +191,7 @@ public class RocketMQProducerMessageHandler extends AbstractMessageHandler
 				}
 				sendResult = this.send(mqMessage, this.messageQueueSelector,
 						message.getHeaders(), message);
-				DistributionSummary distributionSummary = MessageMeter.getMQProducerSumCounter(destination.getName(),mqProducerProperties, meterRegistry);
+				DistributionSummary distributionSummary = MessageMeter.getMQProducerSumCounter(destination.getName(), mqProducerProperties, meterRegistry);
 				distributionSummary.record(1);
 			}
 			if (log.isDebugEnabled()) {
@@ -312,5 +311,4 @@ public class RocketMQProducerMessageHandler extends AbstractMessageHandler
 		this.partitioningInterceptor = partitioningInterceptor;
 		return this;
 	}
-
 }

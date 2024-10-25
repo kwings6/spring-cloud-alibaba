@@ -18,15 +18,8 @@ package com.alibaba.cloud.seata.rest;
 
 import java.io.IOException;
 
-import com.alibaba.cloud.seata.feign.SeataFeignBuilderBeanPostProcessor;
-import com.alibaba.cloud.seata.web.SeataHandlerInterceptor;
-import io.micrometer.core.instrument.Counter;
-import io.micrometer.prometheus.PrometheusMeterRegistry;
 import io.seata.core.context.RootContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;

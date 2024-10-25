@@ -16,27 +16,17 @@
 
 package com.alibaba.cloud.seata.web;
 
-import java.util.concurrent.TimeUnit;
-
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Timer;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
 import io.seata.common.util.StringUtils;
 import io.seata.core.context.RootContext;
-import io.seata.core.exception.TransactionException;
-import io.seata.core.model.GlobalStatus;
-import io.seata.rm.AbstractRMHandler;
-import io.seata.rm.DefaultResourceManager;
-import io.seata.tm.api.GlobalTransaction;
-import io.seata.tm.api.GlobalTransactionContext;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /**

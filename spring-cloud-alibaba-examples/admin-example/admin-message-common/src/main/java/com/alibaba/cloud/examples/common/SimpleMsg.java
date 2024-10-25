@@ -14,20 +14,27 @@
  * limitations under the License.
  */
 
-package com.alibaba.cloud.examples;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+package com.alibaba.cloud.examples.common;
 
 /**
- * @author raozihao
- * @author <a href="mailto:zihaorao@gmail.com">Steve</a>
+ * @author kwings6
  */
-@SpringBootApplication
-public class RestTemplateApplication {
+public class SimpleMsg {
 
-	public static void main(String[] args) {
-		SpringApplication.run(RestTemplateApplication.class, args);
+	private String msg;
+
+	public SimpleMsg() {
 	}
 
+	public SimpleMsg(String msg) {
+		this.msg = msg;
+	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
 }

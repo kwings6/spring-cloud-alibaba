@@ -19,7 +19,6 @@ package com.alibaba.cloud.examples;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 
 import com.alibaba.cloud.examples.common.SimpleMsg;
 import com.alibaba.cloud.examples.feign.EchoClient;

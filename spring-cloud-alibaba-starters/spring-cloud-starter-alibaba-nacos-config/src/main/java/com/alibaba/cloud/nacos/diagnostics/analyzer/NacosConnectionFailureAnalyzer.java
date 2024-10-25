@@ -29,8 +29,12 @@ public class NacosConnectionFailureAnalyzer extends AbstractFailureAnalyzer<Naco
 
 
 	@Override
-	protected FailureAnalysis analyze(Throwable rootFailure, NacosConnectionFailureException cause) {
-		return new FailureAnalysis("Application failed to connect to Nacos server: \"" + cause.getServerAddr() + "\"", "Please check your Nacos server config", cause);
+	protected FailureAnalysis analyze(Throwable rootFailure,
+			NacosConnectionFailureException cause) {
+		return new FailureAnalysis(
+				"Application failed to connect to Nacos server: \""
+						+ cause.getServerAddr() + "\"",
+				"Please check your Nacos server config", cause);
 	}
 
 }

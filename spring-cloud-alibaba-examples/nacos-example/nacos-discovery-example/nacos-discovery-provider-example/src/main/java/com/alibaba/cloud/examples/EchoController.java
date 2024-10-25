@@ -16,17 +16,17 @@
 
 package com.alibaba.cloud.examples;
 
-import java.util.List;
 import java.util.Map;
-
 
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import jakarta.annotation.Resource;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 
 /**
@@ -41,7 +41,7 @@ public class EchoController {
 	private NacosDiscoveryProperties nacosDiscoveryProperties;
 
 	@GetMapping("/sayHello")
-	public String sayHello(){
+	public String sayHello() {
 		System.out.println("beifangwen");
 		return "nihao";
 	}

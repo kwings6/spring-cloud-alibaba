@@ -1,12 +1,11 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+ * Copyright 2013-2023 the original author or authors.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.alibaba.cloud.stream.binder.rocketmq.metrics;
 
 import com.alibaba.cloud.stream.binder.rocketmq.properties.RocketMQProducerProperties;
@@ -24,9 +24,11 @@ import io.micrometer.prometheus.PrometheusMeterRegistry;
 /**
  * @author kwings6
  */
-public class MessageMeter {
+public final class MessageMeter {
+	private MessageMeter() {
+	}
 
-	public static DistributionSummary getMQProducerSumCounter(String destination,RocketMQProducerProperties producerProperties,
+	public static DistributionSummary getMQProducerSumCounter(String destination, RocketMQProducerProperties producerProperties,
 			PrometheusMeterRegistry prometheusMeterRegistry) {
 		return DistributionSummary.builder("spring.cloud.alibaba.rocketmq.producer.message.sum")
 				.description("Spring Cloud Alibaba RocketMQ Producer Message Sum")

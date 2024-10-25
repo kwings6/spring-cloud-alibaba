@@ -42,7 +42,7 @@ public class EchoController {
 	private NacosDiscoveryProperties nacosDiscoveryProperties;
 
 	@GetMapping("/sayHello")
-	public String sayHello(){
+	public String sayHello() {
 		System.out.println("beifangwen");
 		return "nihao";
 	}
