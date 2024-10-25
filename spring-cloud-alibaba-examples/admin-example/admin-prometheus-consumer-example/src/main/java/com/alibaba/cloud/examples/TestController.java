@@ -48,7 +48,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 /**
  * Example of remote invocation of service fusing and load balancing.
  *
- * @author xiaojing, fangjian0423, MieAh
+ * @author kwings6
  */
 @RestController
 public class TestController {

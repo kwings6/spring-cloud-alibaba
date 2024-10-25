@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Change the request path containing echo.
  *
- * @author fangjian0423, MieAh
+ * @author kwings6
  */
 public class UrlCleaner {
 

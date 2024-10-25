@@ -29,9 +29,7 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
 /**
- * @description
- * @author ChengPu raozihao
- * @date 2023/2/11
+ * @author kwings6
  */
 @Component
 public class SentinelRulesConfiguration {

@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Bean;
 /**
  * Configuration for Feign.
  *
- * @author fangjian0423, MieAh
+ * @author kwings6
  */
 public class FeignConfiguration {
 

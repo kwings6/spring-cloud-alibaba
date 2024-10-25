@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * Provide the external exposure interface of the service calling client.
  *
- * @author fangjian0423, MieAh
+ * @author kwings6
  */
 @FeignClient(name = "service-provider", contextId = "service-provider")
 public interface EchoClient {

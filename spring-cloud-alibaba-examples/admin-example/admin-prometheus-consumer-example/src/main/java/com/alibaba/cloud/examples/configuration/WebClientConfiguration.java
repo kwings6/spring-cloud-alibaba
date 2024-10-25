@@ -24,7 +24,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 /**
  * Configuration for web client.
  *
- * @author fangjian0423, MieAh
+ * @author kwings6
  */
 
 @Configuration

@@ -39,7 +39,7 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
 
 /**
- * @author xiaojing, fangjian0423, MieAh
+ * @author kwings6
  */
 @SpringBootApplication
 @EnableDiscoveryClient

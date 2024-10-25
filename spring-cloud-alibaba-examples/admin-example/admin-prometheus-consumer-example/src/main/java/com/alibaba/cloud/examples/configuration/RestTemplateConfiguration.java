@@ -27,7 +27,7 @@ import org.springframework.web.client.RestTemplate;
 /**
  * Load balancing and sentinel configuration for RestTemplate.
  *
- * @author fangjian0423, MieAh
+ * @author kwings6
  */
 @Configuration
 public class RestTemplateConfiguration {

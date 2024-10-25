@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * When the service is blown, the fallback operation is performed.
  *
- * @author fangjian0423, MieAh
+ * @author kwings6
  */
 public class EchoClientFallback implements EchoClient {
 
