@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-package com.alibaba.cloud.examples.broadcast;
+package com.alibaba.cloud.examples;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,31 +25,33 @@ import org.apache.rocketmq.common.message.MessageConst;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.stream.function.StreamBridge;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
 
 
 /**
- * @author sorie
+ * @author kwings6
  */
+@EnableDiscoveryClient
 @SpringBootApplication
-public class RocketMQBroadcastProducerApplication {
-	private static final Logger log = LoggerFactory
-			.getLogger(RocketMQBroadcastProducerApplication.class);
+public class ProviderApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ProviderApplication.class, args);
+	}
+
 	@Autowired
 	private StreamBridge streamBridge;
 
-	public static void main(String[] args) {
-		SpringApplication.run(RocketMQBroadcastProducerApplication.class, args);
-	}
+	private static final Logger log = LoggerFactory
+			.getLogger(ProviderApplication.class);
 
 	@Bean
 	public ApplicationRunner producer() {

@@ -35,11 +35,6 @@ public class MessageMeter {
 				.tag("group", producerProperties.getGroup())
 				.tag("producerType", producerProperties.getProducerType())
 				.tag("sendType", producerProperties.getSendType())
-//				.tag("sendCallBack", producerProperties.getSendCallBack())
-//				.tag("transactionListener", producerProperties.getTransactionListener())
-//				.tag("messageQueueSelector", producerProperties.getMessageQueueSelector())
-//				.tag("sendFailureChannel", producerProperties.getSendFailureChannel())
-//				.tag("errorMessageStrategy", producerProperties.getErrorMessageStrategy())
 				.tag("accessChannel", producerProperties.getAccessChannel())
 				.register(prometheusMeterRegistry);
 	}
@@ -52,27 +47,9 @@ public class MessageMeter {
 				.tag("group", producerProperties.getGroup())
 				.tag("producerType", producerProperties.getProducerType())
 				.tag("sendType", producerProperties.getSendType())
-//				.tag("sendCallBack", producerProperties.getSendCallBack())
-//				.tag("transactionListener", producerProperties.getTransactionListener())
-//				.tag("messageQueueSelector", producerProperties.getMessageQueueSelector())
-//				.tag("sendFailureChannel", producerProperties.getSendFailureChannel())
-//				.tag("errorMessageStrategy", producerProperties.getErrorMessageStrategy())
 				.tag("accessChannel", producerProperties.getAccessChannel())
 				.register(prometheusMeterRegistry);
 
-//		return Counter.builder("spring-cloud.rocketmq.message.sum")
-//				.description("Spring Cloud Alibaba RocketMQ Message Sum")
-//				.tag("nameServer", producerProperties.getGroup())
-//				.tag("group", producerProperties.getGroup())
-//				.tag("producerType", producerProperties.getProducerType())
-//				.tag("sendType", producerProperties.getSendType())
-////				.tag("sendCallBack", producerProperties.getSendCallBack())
-////				.tag("transactionListener", producerProperties.getTransactionListener())
-////				.tag("messageQueueSelector", producerProperties.getMessageQueueSelector())
-////				.tag("sendFailureChannel", producerProperties.getSendFailureChannel())
-////				.tag("errorMessageStrategy", producerProperties.getErrorMessageStrategy())
-//				.tag("accessChannel", producerProperties.getAccessChannel())
-//				.register(prometheusMeterRegistry);
 	}
 
 

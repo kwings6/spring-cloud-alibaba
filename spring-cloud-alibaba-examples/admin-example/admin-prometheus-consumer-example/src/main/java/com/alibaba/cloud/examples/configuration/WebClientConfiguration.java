@@ -14,24 +14,26 @@
  * limitations under the License.
  */
 
-package com.alibaba.cloud.examples;
+package com.alibaba.cloud.examples.configuration;
 
-import io.micrometer.prometheus.PrometheusMeterRegistry;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.WebClient;
 
 /**
- * @author raozihao
- * @author <a href="mailto:zihaorao@gmail.com">Steve</a>
+ * Configuration for web client.
+ *
+ * @author fangjian0423, MieAh
  */
-@SpringBootApplication
-public class RestTemplateApplication {
 
-	public static void main(String[] args) {
-		ConfigurableApplicationContext run = SpringApplication.run(RestTemplateApplication.class, args);
-		System.out.println(run.getBean(PrometheusMeterRegistry.class));
+@Configuration
+public class WebClientConfiguration {
+
+	@Bean
+	@LoadBalanced
+	public WebClient.Builder webClient() {
+		return WebClient.builder();
 	}
-
 }
+

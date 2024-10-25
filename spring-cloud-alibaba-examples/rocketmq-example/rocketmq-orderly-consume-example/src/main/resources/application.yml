@@ -1,5 +1,5 @@
 server:
-  port: 28082
+  port: 18081
 spring:
   application:
     name: rocketmq-orderly-consume-example

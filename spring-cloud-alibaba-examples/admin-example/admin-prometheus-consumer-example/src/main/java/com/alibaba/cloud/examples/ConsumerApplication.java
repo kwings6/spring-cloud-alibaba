@@ -14,54 +14,56 @@
  * limitations under the License.
  */
 
-package com.alibaba.cloud.examples.broadcast;
+package com.alibaba.cloud.examples;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import com.alibaba.cloud.examples.common.SimpleMsg;
 import org.apache.rocketmq.common.message.MessageConst;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClient;
+import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClients;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.stream.function.StreamBridge;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
 
-
 /**
- * @author sorie
+ * @author xiaojing, fangjian0423, MieAh
  */
 @SpringBootApplication
-public class RocketMQBroadcastProducerApplication {
+@EnableDiscoveryClient
+@EnableFeignClients
+@LoadBalancerClients({
+		@LoadBalancerClient("service-provider")
+})
+public class ConsumerApplication {
+
 	private static final Logger log = LoggerFactory
-			.getLogger(RocketMQBroadcastProducerApplication.class);
+			.getLogger(ConsumerApplication.class);
+
 	@Autowired
 	private StreamBridge streamBridge;
 
 	public static void main(String[] args) {
-		SpringApplication.run(RocketMQBroadcastProducerApplication.class, args);
+		SpringApplication.run(ConsumerApplication.class, args);
 	}
 
 	@Bean
-	public ApplicationRunner producer() {
-		return args -> {
-			Thread.sleep(30000);
-			for (int i = 0; i < 100; i++) {
-				String key = "KEY" + i;
-				Map<String, Object> headers = new HashMap<>();
-				headers.put(MessageConst.PROPERTY_KEYS, key);
-				headers.put(MessageConst.PROPERTY_ORIGIN_MESSAGE_ID, i);
-				Message<SimpleMsg> msg = new GenericMessage<SimpleMsg>(new SimpleMsg("Hello RocketMQ " + i), headers);
-				streamBridge.send("producer-out-0", msg);
-			}
+	public Consumer<Message<SimpleMsg>> consumer() {
+		return msg -> {
+			log.info(Thread.currentThread().getName() + " Consumer Receive New Messages: " + msg.getPayload().getMsg());
 		};
 	}
 }
+

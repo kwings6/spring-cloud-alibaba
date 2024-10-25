@@ -24,10 +24,12 @@ import com.alibaba.cloud.sentinel.annotation.SentinelRestTemplate;
 import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.slots.block.RuleConstant;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRule;
+import io.micrometer.prometheus.PrometheusMeterRegistry;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.Customizer;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
@@ -67,7 +69,9 @@ public class SentinelCoreApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(SentinelCoreApplication.class, args);
+
+		ConfigurableApplicationContext run = SpringApplication.run(SentinelCoreApplication.class, args);
+		System.out.println(run.getBean(PrometheusMeterRegistry.class));
 	}
 
 }

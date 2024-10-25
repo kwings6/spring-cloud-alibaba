@@ -14,24 +14,30 @@
  * limitations under the License.
  */
 
-package com.alibaba.cloud.examples;
+package com.alibaba.cloud.examples.feign;
 
-import io.micrometer.prometheus.PrometheusMeterRegistry;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * @author raozihao
- * @author <a href="mailto:zihaorao@gmail.com">Steve</a>
+ * When the service is blown, the fallback operation is performed.
+ *
+ * @author fangjian0423, MieAh
  */
-@SpringBootApplication
-public class RestTemplateApplication {
+public class EchoClientFallback implements EchoClient {
 
-	public static void main(String[] args) {
-		ConfigurableApplicationContext run = SpringApplication.run(RestTemplateApplication.class, args);
-		System.out.println(run.getBean(PrometheusMeterRegistry.class));
+	@Override
+	public String echo(@PathVariable("str") String str) {
+		return "echo fallback";
 	}
 
+	@Override
+	public String divide(@RequestParam Integer a, @RequestParam Integer b) {
+		return "divide fallback";
+	}
+
+	@Override
+	public String notFound() {
+		return "notFound fallback";
+	}
 }

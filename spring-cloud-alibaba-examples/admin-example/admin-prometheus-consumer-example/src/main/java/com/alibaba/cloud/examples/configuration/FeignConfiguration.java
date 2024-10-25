@@ -14,24 +14,23 @@
  * limitations under the License.
  */
 
-package com.alibaba.cloud.examples;
+package com.alibaba.cloud.examples.configuration;
 
-import io.micrometer.prometheus.PrometheusMeterRegistry;
+import com.alibaba.cloud.examples.feign.EchoClient;
+import com.alibaba.cloud.examples.feign.EchoClientFallback;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
 
 /**
- * @author raozihao
- * @author <a href="mailto:zihaorao@gmail.com">Steve</a>
+ * Configuration for Feign.
+ *
+ * @author fangjian0423, MieAh
  */
-@SpringBootApplication
-public class RestTemplateApplication {
+public class FeignConfiguration {
 
-	public static void main(String[] args) {
-		ConfigurableApplicationContext run = SpringApplication.run(RestTemplateApplication.class, args);
-		System.out.println(run.getBean(PrometheusMeterRegistry.class));
+	@Bean
+	public EchoClient echoClientFallback() {
+		return new EchoClientFallback();
 	}
 
 }

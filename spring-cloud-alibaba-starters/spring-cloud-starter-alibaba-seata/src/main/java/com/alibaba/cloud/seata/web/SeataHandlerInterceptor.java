@@ -55,10 +55,6 @@ public class SeataHandlerInterceptor implements HandlerInterceptor {
 
 	private Counter transSumCounter;
 
-//	private Timer transTimer  = Timer.builder("spring-cloud.seata.transaction.time")
-//			.description("Spring Cloud Alibaba Seata global transaction time.")
-//			.register(prometheusMeterRegistry);
-
 
 	private Timer.Sample trancsTimerSample;
 

@@ -14,24 +14,29 @@
  * limitations under the License.
  */
 
-package com.alibaba.cloud.examples;
+package com.alibaba.cloud.examples.configuration;
 
-import io.micrometer.prometheus.PrometheusMeterRegistry;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * @author raozihao
- * @author <a href="mailto:zihaorao@gmail.com">Steve</a>
+ * Change the request path containing echo.
+ *
+ * @author fangjian0423, MieAh
  */
-@SpringBootApplication
-public class RestTemplateApplication {
+public class UrlCleaner {
 
-	public static void main(String[] args) {
-		ConfigurableApplicationContext run = SpringApplication.run(RestTemplateApplication.class, args);
-		System.out.println(run.getBean(PrometheusMeterRegistry.class));
+	private static final Logger LOGGER = LoggerFactory.getLogger(UrlCleaner.class);
+
+	private static final String URL_CLEAN_ECHO = ".*/echo/.*";
+
+	public static String clean(String url) {
+		LOGGER.info("enter urlCleaner");
+		if (url.matches(URL_CLEAN_ECHO)) {
+			LOGGER.info("change url");
+			url = url.replaceAll("/echo/.*", "/echo/{str}");
+		}
+		return url;
 	}
 
 }
