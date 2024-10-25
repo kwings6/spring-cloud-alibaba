@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.alibaba.cloud.nacos.metrics.aop.interceptor;
+
+import java.util.concurrent.TimeUnit;
 
 import feign.InvocationContext;
 import feign.RequestInterceptor;
@@ -25,7 +28,6 @@ import io.micrometer.prometheus.PrometheusMeterRegistry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.concurrent.TimeUnit;
 
 public class NacosDiscoveryMetricsOpenFeignInterceptor implements ResponseInterceptor, RequestInterceptor {
 

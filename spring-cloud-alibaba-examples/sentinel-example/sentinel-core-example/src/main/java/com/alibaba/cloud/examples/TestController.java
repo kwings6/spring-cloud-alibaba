@@ -17,12 +17,10 @@
 package com.alibaba.cloud.examples;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
-import com.alibaba.csp.sentinel.slots.block.BlockException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -39,14 +37,9 @@ public class TestController {
 	private CircuitBreakerFactory circuitBreakerFactory;
 
 	@GetMapping("/hello")
-	@SentinelResource(value = "resource",blockHandler = "failBlockHandler")
+	@SentinelResource("resource")
 	public String hello() {
 		return "Hello";
-	}
-
-	@ResponseBody
-	public String failBlockHandler(BlockException be) {
-		return "flow init";
 	}
 
 	@GetMapping("/aa")

@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.alibaba.cloud.nacos.metrics;
 
 import com.alibaba.cloud.nacos.ConditionalOnNacosDiscoveryEnabled;
@@ -22,7 +23,6 @@ import com.alibaba.cloud.nacos.metrics.aop.interceptor.NacosDiscoveryMetricsOpen
 import com.alibaba.cloud.nacos.metrics.aop.interceptor.NacosDiscoveryMetricsReactiveInterceptor;
 import com.alibaba.cloud.nacos.metrics.aop.interceptor.NacosDiscoveryMetricsRestTemplateInterceptor;
 import feign.Client;
-import feign.Feign;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
 
 import org.springframework.beans.factory.InitializingBean;

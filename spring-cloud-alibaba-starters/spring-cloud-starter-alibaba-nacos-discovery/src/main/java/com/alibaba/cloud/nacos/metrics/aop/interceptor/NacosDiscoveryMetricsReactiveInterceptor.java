@@ -13,11 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.alibaba.cloud.nacos.metrics.aop.interceptor;
 
 
+import java.net.URI;
+import java.util.concurrent.TimeUnit;
+
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
+import reactor.core.publisher.Mono;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -26,10 +31,6 @@ import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.ExchangeFunction;
 
-import reactor.core.publisher.Mono;
-
-import java.net.URI;
-import java.util.concurrent.TimeUnit;
 
 public class NacosDiscoveryMetricsReactiveInterceptor implements ExchangeFilterFunction {
 
@@ -42,25 +43,18 @@ public class NacosDiscoveryMetricsReactiveInterceptor implements ExchangeFilterF
 		HttpMethod method = request.method();
 		URI url = request.url();
 
-		return next.exchange(request)
-				.doOnSuccess(response -> {
-					Counter qpsCounter = Counter.builder("spring-cloud.rpc.reactive.qps")
-							.description("Spring Cloud Alibaba QPS metrics when use Reactive RPC Call.")
-							.baseUnit(TimeUnit.SECONDS.name())
-							.tag("sca.reactive.rpc.method", method.name())
-							.tag("sca.reactive.rpc", "url: " + url
-									+ "  method: " + method.name()
-									+ "  status: " + response.statusCode())
-							.register(prometheusMeterRegistry);
+		return next.exchange(request).doOnSuccess(response -> {
+			Counter qpsCounter = Counter.builder("spring-cloud.rpc.reactive.qps")
+					.description("Spring Cloud Alibaba QPS metrics when use Reactive RPC Call.")
+					.baseUnit(TimeUnit.SECONDS.name()).tag("sca.reactive.rpc.method", method.name())
+					.tag("sca.reactive.rpc", "url: " + url + "  method: " + method.name() + "  status: " + response.statusCode())
+					.register(prometheusMeterRegistry);
 
-					qpsCounter.increment();
+			qpsCounter.increment();
 
-					response.bodyToMono(String.class)
-							.doOnNext(System.out::println)
-							.subscribe();
-				})
-				.doOnError(error -> {
-				});
+			response.bodyToMono(String.class).doOnNext(System.out::println).subscribe();
+		}).doOnError(error -> {
+		});
 
 	}
 

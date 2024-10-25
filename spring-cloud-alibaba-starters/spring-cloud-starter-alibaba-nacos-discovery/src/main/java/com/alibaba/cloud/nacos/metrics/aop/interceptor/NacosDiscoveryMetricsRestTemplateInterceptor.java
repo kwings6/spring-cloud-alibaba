@@ -13,7 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.alibaba.cloud.nacos.metrics.aop.interceptor;
+
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
@@ -23,10 +27,6 @@ import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
-
-
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 
 public class NacosDiscoveryMetricsRestTemplateInterceptor implements ClientHttpRequestInterceptor {
