@@ -61,7 +61,6 @@ public class SeataHandlerInterceptor implements HandlerInterceptor {
 	private static final Logger log = LoggerFactory
 			.getLogger(SeataHandlerInterceptor.class);
 
-	GlobalTransaction globalTransaction;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
@@ -98,23 +97,10 @@ public class SeataHandlerInterceptor implements HandlerInterceptor {
 			Object handler, Exception e) {
 		trancsTimerSample.stop(prometheusMeterRegistry.timer("spring-cloud.seata.transaction.time"));
 
-		Counter transFailedCounter = null;
-
-
-
-//		transFailedCounter = Counter.builder("spring-cloud.seata.transaction.failed.counter")
-//				.description("spring-cloud.seata.transaction.status")
-//				.tag("status", status.name())
-//				.register(prometheusMeterRegistry);
-
-
-//		transFailedCounter.increment();
-
 
 		if (StringUtils.isNotBlank(RootContext.getXID())) {
 
 			String rpcXid = request.getHeader(RootContext.KEY_XID);
-
 
 
 			if (StringUtils.isEmpty(rpcXid)) {
@@ -134,7 +120,6 @@ public class SeataHandlerInterceptor implements HandlerInterceptor {
 					log.warn("bind {} back to RootContext", unbindXid);
 				}
 			}
-
 
 		}
 	}

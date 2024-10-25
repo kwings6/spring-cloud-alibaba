@@ -133,11 +133,9 @@ public class SentinelProtectInterceptor implements ClientHttpRequestInterceptor 
 		if (isDegradeFailure(ex)) {
 			Method fallbackMethod = extractFallbackMethod(sentinelRestTemplate.fallback(),
 					sentinelRestTemplate.fallbackClass());
-//			PrometheusMeterRegistry prometheusMeterRegistry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
 			Counter counter = Counter.builder("spring.cloud.alibaba.sentinel.degrade.sum")
 					.register(prometheusMeterRegistry);
 			counter.increment();
-			log.info("degrade init");
 			if (fallbackMethod != null) {
 				return (ClientHttpResponse) methodInvoke(fallbackMethod, args);
 			}
@@ -153,7 +151,6 @@ public class SentinelProtectInterceptor implements ClientHttpRequestInterceptor 
 		Counter counter = Counter.builder("spring.cloud.alibaba.sentinel.flow.sum")
 				.register(prometheusMeterRegistry);
 		counter.increment();
-		log.info("flow init");
 		if (blockHandler != null) {
 			return (ClientHttpResponse) methodInvoke(blockHandler, args);
 		}

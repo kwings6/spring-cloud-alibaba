@@ -75,12 +75,6 @@ public class SentinelWebAutoConfiguration implements WebMvcConfigurer {
 		return new SentinelWebInterceptor(sentinelWebMvcConfig);
 	}
 
-//	@Bean
-//	@ConditionalOnMissingBean
-//	public PrometheusMeterRegistry prometheusMeterRegistry(){
-//		return new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
-//	}
-
 	@Bean
 	@ConditionalOnProperty(name = "spring.cloud.sentinel.filter.enabled",
 			matchIfMissing = true)
