@@ -217,11 +217,11 @@ public class ProviderApplication {
 
 2. Input` http://localhost:18083/actuator/metrics `view metrics
 
-![image-20241025102148518](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241025102148518.png)
+<img src="./images/image-20241025102148518.png" alt="image-20241025102148518.png" style="zoom: 50%;" />
 
 3. Input` http://localhost:18083/actuator/metrics/spring -Cloud.rpc.reactive. qps ` can view detailed data
 
-   ![image-20241025102246319](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241025102246319.png)
+<img src="./images/image-20241025102246319.png" alt="image-20241025102246319.png" style="zoom: 50%;" />
 
 
 
@@ -234,70 +234,65 @@ public class ProviderApplication {
 
 2. Input`http://localhost:18083/actuator/metrics`View metrics
 
-   ![image-20241025102711586](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241025102711586.png)
+<img src="./images/image-20241025102711586.png" alt="image-20241025102711586.png" style="zoom: 50%;" />
 
 3. input`http://localhost:18083/actuator/metrics/spring.cloud.alibaba.sentinel.degrade.sum`can view detailed data
 
-   ![image-20241025102756285](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241025102756285.png)
-
+<img src="./images/image-20241025102756285.png" alt="image-20241025102756285.png" style="zoom: 50%;" />
 
 
 ## Integrate Prometheus and Grafana 
 
 #### First provide the address` http://localhost:18083/actuator/prometheus `View data transmitted to Prometheus
 
-![image-20241025103000343](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241025103000343.png)
+<img src="./images/image-20241025103000343.png" alt="image-20241025103000343.png" style="zoom: 50%;" />
 
 **Start Prometheus and Grafana through Docker. Before starting, modify the IP address of the targets location in the config. yml folder of Prometheus to the IP address of your personal computer**
 
-![image-20241025103258457](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241025103258457.png)
-
+<img src="./images/image-20241025103258457.png" alt="image-20241025103258457.png" style="zoom: 50%;" />
 
 
 **Input` http://localhost:9090/targets?search= `There are two addresses for scraping metrics**
 
-![image-20241025103641209](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241025103641209.png)
+<img src="./images/image-20241025103641209.png" alt="image-20241025103641209.png" style="zoom: 50%;" />[image-20241025103641209]
 
-![image-20241025103649642](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241025103649642.png)
-
+<img src="./images/image-20241025103649642.png" alt="image-20241025103649642.png" style="zoom: 50%;" />[image-20241025103649642]
 
 
 **Then search in the search box to see the metrics**
 
-![image-20241024225418675](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241024225418675.png)
+<img src="./images/image-20241024225418675.png" alt="image-20241024225418675.png" style="zoom: 50%;" />[image-20241024225418675]
 
-![image-20241024225435691](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241024225435691.png)
-
+<img src="./images/image-20241024225435691.png" alt="image-20241024225435691.png" style="zoom: 50%;" />
 
 
 #### Starting Grafana with Docker
 
 **Enter admin for both account and password, then click on 'skip'**
 
-![image-20241024225527267](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241024225527267.png)
+<img src="./images/image-20241024225527267.png" alt="image-20241024225527267.png" style="zoom: 50%;" />
 
 **Add data source**
 
-![image-20241024225604518](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241024225604518.png)
+<img src="./images/image-20241024225604518.png" alt="image-20241024225604518.png" style="zoom: 50%;" />
 
 **Enter personal computer IP+9090 here**
 
-![image-20241024225633698](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241024225633698.png)
+<img src="./images/image-20241024225633698.png" alt="image-20241024225633698.png" style="zoom: 50%;" />
 
 **Is the test successful**
 
-![image-20241024225708457](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241024225708457.png)
-
+<img src="./images/image-20241024225708457.png" alt="image-20241024225708457.png" style="zoom: 50%;" />
 
 
 **Return to dashboard and import the JSON file from the import folder as the Grafana panel**
 
 [This panel is modified based on the SLS JVM monitoring dashboard](https://grafana.com/grafana/dashboards/12856-jvm-micrometer/)
 
-![image-20241024225744092](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241024225744092.png)
+<img src="./images/image-20241024225744092.png" alt="image-20241024225744092.png" style="zoom: 50%;" />
 
-![image-20241024225835039](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241024225835039.png)
+<img src="./images/image-20241024225835039.png" alt="image-20241024225835039.png" style="zoom: 50%;" />
 
-![image-20241025001135834](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241025001135834.png)
+<img src="./images/image-20241025001135834.png" alt="image-20241025001135834.png" style="zoom: 50%;" />
 
-![image-20241025001146055](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241025001146055.png)
+<img src="./images/image-20241025001146055.png" alt="image-20241025001146055.png" style="zoom: 50%;" />

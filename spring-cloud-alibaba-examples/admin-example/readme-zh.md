@@ -216,11 +216,11 @@ public class ProviderApplication {
 
 2. 输入`http://localhost:18083/actuator/metrics`查看指标
 
-![image-20241025102148518](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241025102148518.png)
+<img src="./images/image-20241025102148518.png" alt="image-20241025102148518.png" style="zoom: 50%;" />
 
 3. 输入`http://localhost:18083/actuator/metrics/spring-cloud.rpc.reactive.qps`可查看详细数据
 
-   ![image-20241025102246319](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241025102246319.png)
+<img src="./images/image-20241025102246319.png" alt="image-20241025102246319.png" style="zoom: 50%;" />
 
 
 
@@ -233,11 +233,11 @@ public class ProviderApplication {
 
 2. 输入`http://localhost:18083/actuator/metrics`查看指标
 
-   ![image-20241025102711586](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241025102711586.png)
+<img src="./images/image-20241025102711586.png" alt="image-20241025102711586.png" style="zoom: 50%;" />
 
 3. 输入`http://localhost:18083/actuator/metrics/spring.cloud.alibaba.sentinel.degrade.sum`查看具体指标
 
-   ![image-20241025102756285](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241025102756285.png)
+<img src="./images/image-20241025102756285.png" alt="image-20241025102756285.png" style="zoom: 50%;" />
 
 
 
@@ -245,27 +245,27 @@ public class ProviderApplication {
 
 #### 可以先通过地址`http://localhost:18083/actuator/prometheus`查看传输给Prometheus的数据
 
-![image-20241025103000343](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241025103000343.png)
+<img src="./images/image-20241025103000343.png" alt="image-20241025103000343.png" style="zoom: 50%;" />
 
 **通过docker启动Prometheus和Grafana，启动前修改prometheus文件夹下的config.yml 的targets位置的ip地址请修改为个人电脑的ip**
 
-![image-20241025103258457](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241025103258457.png)
+<img src="./images/image-20241025103258457.png" alt="image-20241025103258457.png" style="zoom: 50%;" />
 
 
 
 **输入`http://localhost:9090/targets?search=`有两个刮取指标的地址**
 
-![image-20241025103641209](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241025103641209.png)
+<img src="./images/image-20241025103641209.png" alt="image-20241025103641209.png" style="zoom: 50%;" />
 
-![image-20241025103649642](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241025103649642.png)
+<img src="./images/image-20241025103649642.png" alt="image-20241025103649642.png" style="zoom: 50%;" />
 
 
 
 **然后再搜索框进行搜索能看到指标**
 
-![image-20241024225418675](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241024225418675.png)
+<img src="./images/image-20241024225418675.png" alt="image-20241024225418675.png" style="zoom: 50%;" />
 
-![image-20241024225435691](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241024225435691.png)
+<img src="./images/image-20241024225435691.png" alt="image-20241024225435691.png" style="zoom: 50%;" />
 
 
 
@@ -273,19 +273,19 @@ public class ProviderApplication {
 
 **账户密码均输入admin，然后点击skip**
 
-![image-20241024225527267](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241024225527267.png)
+<img src="./images/image-20241024225527267.png" alt="image-20241024225527267.png" style="zoom: 50%;" />
 
 **添加数据源**
 
-![image-20241024225604518](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241024225604518.png)
+<img src="./images/image-20241024225604518.png" alt="image-20241024225604518.png" style="zoom: 50%;" />
 
 **此处输入个人电脑ip+9090**
 
-![image-20241024225633698](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241024225633698.png)
+<img src="./images/image-20241024225633698.png" alt="image-20241024225633698.png" style="zoom: 50%;" />
 
 **测试是否成功**
 
-![image-20241024225708457](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241024225708457.png)
+<img src="./images/image-20241024225708457.png" alt="image-20241024225708457.png" style="zoom: 50%;" />
 
 
 
@@ -293,10 +293,10 @@ public class ProviderApplication {
 
 [此面板基于SLS JVM监控大盘进行修改](https://grafana.com/grafana/dashboards/12856-jvm-micrometer/)
 
-![image-20241024225744092](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241024225744092.png)
+<img src="./images/image-20241024225744092.png" alt="image-20241024225744092.png" style="zoom: 50%;" />
 
-![image-20241024225835039](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241024225835039.png)
+<img src="./images/image-20241024225835039.png" alt="image-20241024225835039.png" style="zoom: 50%;" />
 
-![image-20241025001135834](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241025001135834.png)
+<img src="./images/image-20241025001135834.png" alt="image-20241025001135834.png" style="zoom: 50%;" />
 
-![image-20241025001146055](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20241025001146055.png)
+<img src="./images/image-20241025001146055.png" alt="image-20241025001146055.png" style="zoom: 50%;" />
