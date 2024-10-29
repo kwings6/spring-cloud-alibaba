@@ -251,17 +251,16 @@ public class ProviderApplication {
 
 <img src="./images/image-20241025103258457.png" alt="image-20241025103258457.png" style="zoom: 50%;" />
 
-
 **Input` http://localhost:9090/targets?search= `There are two addresses for scraping metrics**
 
-<img src="./images/image-20241025103641209.png" alt="image-20241025103641209.png" style="zoom: 50%;" />[image-20241025103641209]
+<img src="./images/image-20241025103641209.png" alt="image-20241025103641209.png" style="zoom: 50%;" />
 
-<img src="./images/image-20241025103649642.png" alt="image-20241025103649642.png" style="zoom: 50%;" />[image-20241025103649642]
+<img src="./images/image-20241025103649642.png" alt="image-20241025103649642.png" style="zoom: 50%;" />
 
 
 **Then search in the search box to see the metrics**
 
-<img src="./images/image-20241024225418675.png" alt="image-20241024225418675.png" style="zoom: 50%;" />[image-20241024225418675]
+<img src="./images/image-20241024225418675.png" alt="image-20241024225418675.png" style="zoom: 50%;" />
 
 <img src="./images/image-20241024225435691.png" alt="image-20241024225435691.png" style="zoom: 50%;" />
 
