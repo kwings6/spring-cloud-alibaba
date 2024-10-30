@@ -1,5 +1,4 @@
 version: "3.8"
-
 services:
 
   grafana:
@@ -10,14 +9,14 @@ services:
       - "3000:3000"
 
   # Jaeger
-#  jaeger-all-in-one:
-#    image: jaegertracing/all-in-one:latest
-#    ports:
-#      - "16686:16686"
-#      - "14268"
-#      - "14250:14250"
-#    environment:
-#      - COLLECTOR_OTLP_ENABLED=true
+  #  jaeger-all-in-one:
+  #    image: jaegertracing/all-in-one:latest
+  #    ports:
+  #      - "16686:16686"
+  #      - "14268"
+  #      - "14250:14250"
+  #    environment:
+  #      - COLLECTOR_OTLP_ENABLED=true
 
   # Zipkin
   zipkin-all-in-one:

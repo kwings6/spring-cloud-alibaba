@@ -220,7 +220,25 @@ public class ProviderApplication {
 
 3. 输入`http://localhost:18083/actuator/metrics/spring-cloud.rpc.reactive.qps`可查看详细数据
 
-<img src="./images/image-20241025102246319.png" alt="image-20241025102246319.png" style="zoom: 50%;" />
+```json
+{
+	"name": "spring-cloud.rpc.reactive.qps",
+	"description": "Spring Cloud Alibaba QPS metrics when use Reactive RPC Call.",
+	"baseUnit": "SECONDS",
+	"measurements": [{
+		"statistic": "COUNT",
+		"value": 17
+	}],
+	"availableTags": [{
+		"tag": "sca.reactive.rpc.method",
+		"values": ["GET"]
+	},
+	{
+		"tag": "sca.reactive.rpc",
+		"values": ["url: http://10.2.64.89:18080/echo/11  method: GET  status: 200 OK"]
+	}]
+}
+```
 
 
 
@@ -229,7 +247,7 @@ public class ProviderApplication {
 1. 在地址栏输入
     `http://localhost:18083/rt`
 
-  `http://localhost:18083/get`
+   `http://localhost:18083/get`
 
 2. 输入`http://localhost:18083/actuator/metrics`查看指标
 
@@ -237,7 +255,16 @@ public class ProviderApplication {
 
 3. 输入`http://localhost:18083/actuator/metrics/spring.cloud.alibaba.sentinel.degrade.sum`查看具体指标
 
-<img src="./images/image-20241025102756285.png" alt="image-20241025102756285.png" style="zoom: 50%;" />
+```json
+{
+	"name": "spring.cloud.alibaba.sentinel.degrade.sum",
+	"measurements": [{
+		"statistic": "COUNT",
+		"value": 16
+	}],
+	"availableTags": []
+}
+```
 
 
 

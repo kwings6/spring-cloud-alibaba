@@ -52,7 +52,6 @@ public class RocketMQBroadcastProducerApplication {
 	@Bean
 	public ApplicationRunner producer() {
 		return args -> {
-			Thread.sleep(30000);
 			for (int i = 0; i < 100; i++) {
 				String key = "KEY" + i;
 				Map<String, Object> headers = new HashMap<>();

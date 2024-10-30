@@ -108,9 +108,6 @@
         <module>spring-cloud-alibaba-starters</module>
         <module>spring-cloud-alibaba-coverage</module>
         <module>spring-cloud-alibaba-tests</module>
-        <module>spring-cloud-alibaba-examples/admin-example/admin-prometheus-provider-example</module>
-		<module>spring-cloud-alibaba-examples/admin-example/admin-prometheus-consumer-example</module>
-		<module>spring-cloud-alibaba-examples/admin-example/admin-message-common</module>
 	</modules>
 
     <dependencyManagement>

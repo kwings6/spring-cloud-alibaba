@@ -47,9 +47,6 @@ public class ConsumerApplication {
 	private static final Logger log = LoggerFactory
 			.getLogger(ConsumerApplication.class);
 
-	@Autowired
-	private StreamBridge streamBridge;
-
 	public static void main(String[] args) {
 		SpringApplication.run(ConsumerApplication.class, args);
 	}
