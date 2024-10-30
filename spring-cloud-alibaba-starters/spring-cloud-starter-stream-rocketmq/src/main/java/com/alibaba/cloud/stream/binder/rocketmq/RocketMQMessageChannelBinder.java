@@ -67,7 +67,6 @@ public class RocketMQMessageChannelBinder extends
 	private final RocketMQBinderConfigurationProperties binderConfigurationProperties;
 
 	private PrometheusMeterRegistry meterRegistry;
-
 	public RocketMQMessageChannelBinder(
 			RocketMQBinderConfigurationProperties binderConfigurationProperties,
 			RocketMQExtendedBindingProperties extendedBindingProperties,
@@ -187,7 +186,6 @@ public class RocketMQMessageChannelBinder extends
 	/**
 	 * Binders can return an {@link ErrorMessageStrategy} for building error messages;
 	 * binder implementations typically might add extra headers to the error message.
-	 *
 	 * @return the implementation - may be null.
 	 */
 	@Override

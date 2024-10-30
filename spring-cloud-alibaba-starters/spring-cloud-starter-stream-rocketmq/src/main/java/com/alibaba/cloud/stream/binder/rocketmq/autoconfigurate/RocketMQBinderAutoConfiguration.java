@@ -53,9 +53,6 @@ public class RocketMQBinderAutoConfiguration {
 	@Autowired
 	private RocketMQBinderConfigurationProperties rocketBinderConfigurationProperties;
 
-//	@Autowired
-//	private PrometheusMeterRegistry meterRegistry;
-
 	@Bean
 	public RocketMQTopicProvisioner rocketMQTopicProvisioner() {
 		return new RocketMQTopicProvisioner();

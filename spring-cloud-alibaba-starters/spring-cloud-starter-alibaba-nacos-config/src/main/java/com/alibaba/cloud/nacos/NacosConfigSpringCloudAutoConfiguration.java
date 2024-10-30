@@ -56,4 +56,5 @@ public class NacosConfigSpringCloudAutoConfiguration {
 	public NacosConfigRefreshEventListener nacosConfigRefreshEventListener() {
 		return new NacosConfigRefreshEventListener();
 	}
+
 }

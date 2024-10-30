@@ -25,7 +25,6 @@ import java.util.Properties;
 
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.discovery.NacosDiscoveryClientConfiguration;
-import com.alibaba.cloud.nacos.metrics.NacosMetricsAutoConfiguration;
 import com.alibaba.nacos.api.NacosFactory;
 import io.micrometer.prometheus.PrometheusConfig;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
@@ -70,9 +69,6 @@ public class NacosAutoServiceRegistrationIpNetworkInterfaceTests {
 
 	@Autowired
 	private InetUtils inetUtils;
-
-
-
 	private static MockedStatic<NacosFactory> nacosFactoryMockedStatic;
 	static {
 		nacosFactoryMockedStatic = Mockito.mockStatic(NacosFactory.class);
@@ -127,7 +123,7 @@ public class NacosAutoServiceRegistrationIpNetworkInterfaceTests {
 	@EnableAutoConfiguration
 	@ImportAutoConfiguration({ AutoServiceRegistrationConfiguration.class,
 			NacosDiscoveryClientConfiguration.class,
-			NacosServiceRegistryAutoConfiguration.class, NacosMetricsAutoConfiguration.class})
+			NacosServiceRegistryAutoConfiguration.class })
 	public static class TestConfig {
 		@Bean
 		@ConditionalOnMissingBean

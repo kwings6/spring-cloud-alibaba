@@ -31,7 +31,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
  * @author xiaojing
- * <p>
+ *
  * Seata HandlerInterceptor, Convert Seata information into
  * @see io.seata.core.context.RootContext from http request's header in
  * {@link org.springframework.web.servlet.HandlerInterceptor#preHandle(HttpServletRequest, HttpServletResponse, Object)},
@@ -45,24 +45,19 @@ public class SeataHandlerInterceptor implements HandlerInterceptor {
 
 	private Counter transSumCounter;
 
-
 	private Timer.Sample trancsTimerSample;
 
 	private static final Logger log = LoggerFactory
 			.getLogger(SeataHandlerInterceptor.class);
 
-
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
 			Object handler) {
-
 		transSumCounter = Counter.builder("spring-cloud.seata.transaction.counter")
 				.description("Spring Cloud Alibaba Seata global transaction sum.")
 				.register(prometheusMeterRegistry);
 		String xid = RootContext.getXID();
 		String rpcXid = request.getHeader(RootContext.KEY_XID);
-
-
 		if (log.isDebugEnabled()) {
 			log.debug("xid in RootContext {} xid in RpcContext {}", xid, rpcXid);
 		}
@@ -73,12 +68,8 @@ public class SeataHandlerInterceptor implements HandlerInterceptor {
 				log.debug("bind {} to RootContext", rpcXid);
 			}
 		}
-
-
 		transSumCounter.increment();
-
 		trancsTimerSample = Timer.start(prometheusMeterRegistry);
-
 		return true;
 	}
 
@@ -87,19 +78,14 @@ public class SeataHandlerInterceptor implements HandlerInterceptor {
 			Object handler, Exception e) {
 		trancsTimerSample.stop(prometheusMeterRegistry.timer("spring-cloud.seata.transaction.time"));
 
-
 		if (StringUtils.isNotBlank(RootContext.getXID())) {
-
 			String rpcXid = request.getHeader(RootContext.KEY_XID);
-
 
 			if (StringUtils.isEmpty(rpcXid)) {
 				return;
 			}
 
 			String unbindXid = RootContext.unbind();
-
-
 			if (log.isDebugEnabled()) {
 				log.debug("unbind {} from RootContext", unbindXid);
 			}
@@ -110,7 +96,6 @@ public class SeataHandlerInterceptor implements HandlerInterceptor {
 					log.warn("bind {} back to RootContext", unbindXid);
 				}
 			}
-
 		}
 	}
 

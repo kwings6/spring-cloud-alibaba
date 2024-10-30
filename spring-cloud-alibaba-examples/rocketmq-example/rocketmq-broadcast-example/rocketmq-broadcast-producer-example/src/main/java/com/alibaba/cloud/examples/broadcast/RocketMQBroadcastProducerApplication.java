@@ -44,7 +44,6 @@ public class RocketMQBroadcastProducerApplication {
 			.getLogger(RocketMQBroadcastProducerApplication.class);
 	@Autowired
 	private StreamBridge streamBridge;
-
 	public static void main(String[] args) {
 		SpringApplication.run(RocketMQBroadcastProducerApplication.class, args);
 	}

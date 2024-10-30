@@ -84,7 +84,6 @@ public class RocketMQProducerMessageHandler extends AbstractMessageHandler
 	private final RocketMQProducerProperties mqProducerProperties;
 
 	private PrometheusMeterRegistry meterRegistry;
-
 	public RocketMQProducerMessageHandler(ProducerDestination destination,
 			ExtendedProducerProperties<RocketMQProducerProperties> extendedProducerProperties,
 			RocketMQProducerProperties mqProducerProperties,
@@ -311,4 +310,5 @@ public class RocketMQProducerMessageHandler extends AbstractMessageHandler
 		this.partitioningInterceptor = partitioningInterceptor;
 		return this;
 	}
+
 }

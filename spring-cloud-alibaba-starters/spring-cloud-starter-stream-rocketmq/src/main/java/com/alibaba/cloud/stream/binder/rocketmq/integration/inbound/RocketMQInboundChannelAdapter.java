@@ -70,7 +70,6 @@ public class RocketMQInboundChannelAdapter extends MessageProducerSupport
 	private final ExtendedConsumerProperties<RocketMQConsumerProperties> extendedConsumerProperties;
 
 	private PrometheusMeterRegistry prometheusMeterRegistry;
-
 	public RocketMQInboundChannelAdapter(String topic,
 			ExtendedConsumerProperties<RocketMQConsumerProperties> extendedConsumerProperties,
 			PrometheusMeterRegistry prometheusMeterRegistry) {
@@ -117,24 +116,24 @@ public class RocketMQInboundChannelAdapter extends MessageProducerSupport
 			if (extendedConsumerProperties.getExtension().getPush().getOrderly()) {
 				pushConsumer.registerMessageListener((MessageListenerOrderly) (msgs,
 						context) -> RocketMQInboundChannelAdapter.this
-						.consumeMessage(msgs, () -> {
-							context.setSuspendCurrentQueueTimeMillis(
-									extendedConsumerProperties.getExtension()
-											.getPush()
-											.getSuspendCurrentQueueTimeMillis());
-							return ConsumeOrderlyStatus.SUSPEND_CURRENT_QUEUE_A_MOMENT;
-						}, () -> ConsumeOrderlyStatus.SUCCESS));
+										.consumeMessage(msgs, () -> {
+												context.setSuspendCurrentQueueTimeMillis(
+																extendedConsumerProperties.getExtension()
+																				.getPush()
+																				.getSuspendCurrentQueueTimeMillis());
+												return ConsumeOrderlyStatus.SUSPEND_CURRENT_QUEUE_A_MOMENT;
+										}, () -> ConsumeOrderlyStatus.SUCCESS));
 			}
 			else {
 				pushConsumer.registerMessageListener((MessageListenerConcurrently) (msgs,
 						context) -> RocketMQInboundChannelAdapter.this
-						.consumeMessage(msgs, () -> {
-							context.setDelayLevelWhenNextConsume(
-									extendedConsumerProperties.getExtension()
-											.getPush()
-											.getDelayLevelWhenNextConsume());
-							return ConsumeConcurrentlyStatus.RECONSUME_LATER;
-						}, () -> ConsumeConcurrentlyStatus.CONSUME_SUCCESS));
+										.consumeMessage(msgs, () -> {
+												context.setDelayLevelWhenNextConsume(
+																extendedConsumerProperties.getExtension()
+																				.getPush()
+																				.getDelayLevelWhenNextConsume());
+											return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+										}, () -> ConsumeConcurrentlyStatus.CONSUME_SUCCESS));
 			}
 		}
 		catch (Exception e) {

@@ -97,6 +97,7 @@ public class RocketMQMessageChannelBinderTest {
 	@ImportAutoConfiguration({ ExtendedBindingHandlerMappingsProviderConfiguration.class,
 			RocketMQBinderAutoConfiguration.class})
 	public static class TestConfig {
+
 		@Bean
 		@ConditionalOnMissingBean
 		PrometheusMeterRegistry prometheusMeterRegistry() {

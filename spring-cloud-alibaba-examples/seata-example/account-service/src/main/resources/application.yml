@@ -55,7 +55,6 @@ seata:
       username: 'nacos'
       password: 'nacos'
 
-
 management:
   endpoints:
     web:

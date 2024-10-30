@@ -66,6 +66,15 @@ spring:
 server:
   port: 18083
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
 #management:
 #  endpoint:
 #    web:
@@ -78,13 +87,4 @@ server:
 #        enabled: false
 #      # sentinel:
 #      #  enabled: false
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always
 

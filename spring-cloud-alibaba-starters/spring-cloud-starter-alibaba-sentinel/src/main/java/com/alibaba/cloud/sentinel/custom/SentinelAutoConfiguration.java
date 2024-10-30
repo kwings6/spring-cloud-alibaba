@@ -51,7 +51,6 @@ import org.springframework.core.env.Environment;
 @EnableConfigurationProperties(SentinelProperties.class)
 public class SentinelAutoConfiguration {
 
-
 	@Bean
 	@ConditionalOnMissingBean
 	public SentinelResourceAspect sentinelResourceAspect() {
@@ -68,7 +67,6 @@ public class SentinelAutoConfiguration {
 		return new SentinelBeanPostProcessor(applicationContext);
 	}
 
-
 	@Bean
 	@ConditionalOnMissingBean
 	public SentinelDataSourceHandler sentinelDataSourceHandler(
@@ -76,8 +74,6 @@ public class SentinelAutoConfiguration {
 			Environment env) {
 		return new SentinelDataSourceHandler(beanFactory, sentinelProperties, env);
 	}
-
-
 
 	@ConditionalOnClass(ObjectMapper.class)
 	@Configuration(proxyBeanMethods = false)

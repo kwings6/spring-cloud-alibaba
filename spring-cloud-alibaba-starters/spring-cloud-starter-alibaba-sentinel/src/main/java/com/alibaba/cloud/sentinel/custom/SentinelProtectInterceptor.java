@@ -141,7 +141,6 @@ public class SentinelProtectInterceptor implements ClientHttpRequestInterceptor 
 			else {
 				return new SentinelClientHttpResponse();
 			}
-
 		}
 		// handle flow
 		Method blockHandler = extractBlockHandlerMethod(

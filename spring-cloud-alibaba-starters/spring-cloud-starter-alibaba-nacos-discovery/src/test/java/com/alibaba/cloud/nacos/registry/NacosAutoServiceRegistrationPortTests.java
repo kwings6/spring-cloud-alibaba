@@ -93,6 +93,7 @@ public class NacosAutoServiceRegistrationPortTests {
 			NacosDiscoveryClientConfiguration.class,
 			NacosServiceRegistryAutoConfiguration.class })
 	public static class TestConfig {
+
 		@Bean
 		@ConditionalOnMissingBean
 		PrometheusMeterRegistry prometheusMeterRegistry() {

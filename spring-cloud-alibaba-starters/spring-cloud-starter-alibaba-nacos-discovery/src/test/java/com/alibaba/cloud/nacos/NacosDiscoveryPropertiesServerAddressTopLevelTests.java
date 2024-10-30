@@ -17,7 +17,6 @@
 package com.alibaba.cloud.nacos;
 
 import com.alibaba.cloud.nacos.discovery.NacosDiscoveryClientConfiguration;
-import com.alibaba.cloud.nacos.metrics.NacosMetricsAutoConfiguration;
 import com.alibaba.cloud.nacos.registry.NacosServiceRegistryAutoConfiguration;
 import io.micrometer.prometheus.PrometheusConfig;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
@@ -37,10 +36,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author <a href="mailto:lyuzb@lyuzb.com">lyuzb</a>
+ *
  */
 @SpringBootTest(classes = TestConfig.class, properties = {
 		"spring.application.name=app",
-		"spring.cloud.nacos.server-addr=123.123.123.123:8848"})
+		"spring.cloud.nacos.server-addr=123.123.123.123:8848" })
 public class NacosDiscoveryPropertiesServerAddressTopLevelTests {
 
 	@Autowired
@@ -55,7 +55,7 @@ public class NacosDiscoveryPropertiesServerAddressTopLevelTests {
 	@EnableAutoConfiguration
 	@ImportAutoConfiguration({AutoServiceRegistrationConfiguration.class,
 			NacosDiscoveryClientConfiguration.class,
-			NacosServiceRegistryAutoConfiguration.class, NacosMetricsAutoConfiguration.class})
+			NacosServiceRegistryAutoConfiguration.class })
 	public static class TestConfig {
 		@Bean
 		@ConditionalOnMissingBean

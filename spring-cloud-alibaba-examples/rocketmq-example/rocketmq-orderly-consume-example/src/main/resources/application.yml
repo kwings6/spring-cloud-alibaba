@@ -1,5 +1,5 @@
 server:
-  port: 18081
+  port: 28082
 spring:
   application:
     name: rocketmq-orderly-consume-example
@@ -28,9 +28,9 @@ spring:
           destination: orderly
           group: orderly-consumer
 
-#logging:
-#  level:
-#    org.springframework.context.support: debug
+logging:
+  level:
+    org.springframework.context.support: debug
 
 management:
   endpoints:

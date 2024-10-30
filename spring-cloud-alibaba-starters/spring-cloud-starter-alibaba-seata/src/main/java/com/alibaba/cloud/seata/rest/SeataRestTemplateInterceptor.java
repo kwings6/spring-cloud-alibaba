@@ -32,7 +32,6 @@ import org.springframework.util.StringUtils;
  */
 public class SeataRestTemplateInterceptor implements ClientHttpRequestInterceptor {
 
-
 	@Override
 	public ClientHttpResponse intercept(HttpRequest httpRequest, byte[] bytes,
 			ClientHttpRequestExecution clientHttpRequestExecution) throws IOException {
@@ -43,8 +42,6 @@ public class SeataRestTemplateInterceptor implements ClientHttpRequestIntercepto
 		if (StringUtils.hasLength(xid)) {
 			requestWrapper.getHeaders().add(RootContext.KEY_XID, xid);
 		}
-
-
 		return clientHttpRequestExecution.execute(requestWrapper, bytes);
 	}
 

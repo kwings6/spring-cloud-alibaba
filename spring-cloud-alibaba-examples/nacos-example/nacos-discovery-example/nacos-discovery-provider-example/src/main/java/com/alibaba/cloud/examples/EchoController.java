@@ -40,12 +40,6 @@ public class EchoController {
 	@Resource
 	private NacosDiscoveryProperties nacosDiscoveryProperties;
 
-	@GetMapping("/sayHello")
-	public String sayHello() {
-		System.out.println("beifangwen");
-		return "nihao";
-	}
-
 	@GetMapping("/")
 	public ResponseEntity<String> index() {
 		return new ResponseEntity<>("index error", HttpStatus.INTERNAL_SERVER_ERROR);
