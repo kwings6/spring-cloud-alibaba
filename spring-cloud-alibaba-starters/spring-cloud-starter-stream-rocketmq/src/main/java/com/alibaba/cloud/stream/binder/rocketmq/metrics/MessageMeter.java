@@ -60,5 +60,5 @@ public final class MessageMeter {
 				.description("Spring Cloud Alibaba RocketMQ Message Consumer Success Sum")
 				.tag("topic", topic)
 				.register(prometheusMeterRegistry);
-			}
+	}
 }

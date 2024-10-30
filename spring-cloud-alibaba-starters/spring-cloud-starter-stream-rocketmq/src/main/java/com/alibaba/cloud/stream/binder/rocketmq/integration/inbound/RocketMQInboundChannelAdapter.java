@@ -117,30 +117,30 @@ public class RocketMQInboundChannelAdapter extends MessageProducerSupport
 			if (extendedConsumerProperties.getExtension().getPush().getOrderly()) {
 				pushConsumer.registerMessageListener((MessageListenerOrderly) (msgs,
 						context) -> RocketMQInboundChannelAdapter.this
-								.consumeMessage(msgs, () -> {
-									context.setSuspendCurrentQueueTimeMillis(
-											extendedConsumerProperties.getExtension()
-													.getPush()
-													.getSuspendCurrentQueueTimeMillis());
-									return ConsumeOrderlyStatus.SUSPEND_CURRENT_QUEUE_A_MOMENT;
-								}, () -> ConsumeOrderlyStatus.SUCCESS));
+						.consumeMessage(msgs, () -> {
+							context.setSuspendCurrentQueueTimeMillis(
+									extendedConsumerProperties.getExtension()
+											.getPush()
+											.getSuspendCurrentQueueTimeMillis());
+							return ConsumeOrderlyStatus.SUSPEND_CURRENT_QUEUE_A_MOMENT;
+						}, () -> ConsumeOrderlyStatus.SUCCESS));
 			}
 			else {
 				pushConsumer.registerMessageListener((MessageListenerConcurrently) (msgs,
 						context) -> RocketMQInboundChannelAdapter.this
-								.consumeMessage(msgs, () -> {
-									context.setDelayLevelWhenNextConsume(
-											extendedConsumerProperties.getExtension()
-													.getPush()
-													.getDelayLevelWhenNextConsume());
-									return ConsumeConcurrentlyStatus.RECONSUME_LATER;
-								}, () -> ConsumeConcurrentlyStatus.CONSUME_SUCCESS));
+						.consumeMessage(msgs, () -> {
+							context.setDelayLevelWhenNextConsume(
+									extendedConsumerProperties.getExtension()
+											.getPush()
+											.getDelayLevelWhenNextConsume());
+							return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+						}, () -> ConsumeConcurrentlyStatus.CONSUME_SUCCESS));
 			}
 		}
 		catch (Exception e) {
 			log.error("DefaultMQPushConsumer init failed, Caused by " + e.getMessage());
 			throw new MessagingException(MessageBuilder.withPayload(
-					"DefaultMQPushConsumer init failed, Caused by " + e.getMessage())
+							"DefaultMQPushConsumer init failed, Caused by " + e.getMessage())
 					.build(), e);
 		}
 	}
@@ -202,7 +202,7 @@ public class RocketMQInboundChannelAdapter extends MessageProducerSupport
 			instrumentation.markStartFailed(e);
 			log.error("DefaultMQPushConsumer init failed, Caused by " + e.getMessage());
 			throw new MessagingException(MessageBuilder.withPayload(
-					"DefaultMQPushConsumer init failed, Caused by " + e.getMessage())
+							"DefaultMQPushConsumer init failed, Caused by " + e.getMessage())
 					.build(), e);
 		}
 		finally {

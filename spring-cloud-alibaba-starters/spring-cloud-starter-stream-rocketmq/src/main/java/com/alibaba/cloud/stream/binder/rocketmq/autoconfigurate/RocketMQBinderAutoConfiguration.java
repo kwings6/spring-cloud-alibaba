@@ -53,8 +53,8 @@ public class RocketMQBinderAutoConfiguration {
 	@Autowired
 	private RocketMQBinderConfigurationProperties rocketBinderConfigurationProperties;
 
-	@Autowired
-	private PrometheusMeterRegistry meterRegistry;
+//	@Autowired
+//	private PrometheusMeterRegistry meterRegistry;
 
 	@Bean
 	public RocketMQTopicProvisioner rocketMQTopicProvisioner() {
@@ -63,7 +63,7 @@ public class RocketMQBinderAutoConfiguration {
 
 	@Bean
 	public RocketMQMessageChannelBinder rocketMQMessageChannelBinder(
-			RocketMQTopicProvisioner provisioningProvider) {
+			RocketMQTopicProvisioner provisioningProvider, PrometheusMeterRegistry meterRegistry) {
 		return new RocketMQMessageChannelBinder(rocketBinderConfigurationProperties,
 				extendedBindingProperties, provisioningProvider, meterRegistry);
 	}
