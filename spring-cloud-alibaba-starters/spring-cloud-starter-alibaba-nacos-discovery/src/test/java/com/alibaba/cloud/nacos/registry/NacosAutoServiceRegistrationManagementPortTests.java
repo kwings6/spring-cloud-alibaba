@@ -21,6 +21,8 @@ import java.util.Properties;
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.discovery.NacosDiscoveryClientConfiguration;
 import com.alibaba.nacos.api.NacosFactory;
+import io.micrometer.prometheus.PrometheusConfig;
+import io.micrometer.prometheus.PrometheusMeterRegistry;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
@@ -29,8 +31,10 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.client.serviceregistry.AutoServiceRegistrationConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,11 +47,11 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @SpringBootTest(
 		classes = NacosAutoServiceRegistrationManagementPortTests.TestConfig.class,
-		properties = { "spring.application.name=myTestService1",
+		properties = {"spring.application.name=myTestService1",
 				"management.server.port=8888",
 				"management.server.servlet.context-path=/test-context-path",
 				"spring.cloud.nacos.discovery.server-addr=127.0.0.1:8848",
-				"spring.cloud.nacos.discovery.port=8888" },
+				"spring.cloud.nacos.discovery.port=8888"},
 		webEnvironment = RANDOM_PORT)
 public class NacosAutoServiceRegistrationManagementPortTests {
 
@@ -87,16 +91,20 @@ public class NacosAutoServiceRegistrationManagementPortTests {
 				.isEqualTo("8888");
 		assertThat(
 				properties.getMetadata().get(NacosRegistration.MANAGEMENT_CONTEXT_PATH))
-						.isEqualTo("/test-context-path");
+				.isEqualTo("/test-context-path");
 	}
 
 	@Configuration
 	@EnableAutoConfiguration
-	@ImportAutoConfiguration({ AutoServiceRegistrationConfiguration.class,
+	@ImportAutoConfiguration({AutoServiceRegistrationConfiguration.class,
 			NacosDiscoveryClientConfiguration.class,
-			NacosServiceRegistryAutoConfiguration.class })
+			NacosServiceRegistryAutoConfiguration.class})
 	public static class TestConfig {
-
+		@Bean
+		@ConditionalOnMissingBean
+		PrometheusMeterRegistry prometheusMeterRegistry() {
+			return new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
+		}
 	}
 
 }
