@@ -116,11 +116,11 @@ public class RocketMQInboundChannelAdapter extends MessageProducerSupport
 			if (extendedConsumerProperties.getExtension().getPush().getOrderly()) {
 				pushConsumer.registerMessageListener((MessageListenerOrderly) (msgs,
 						context) -> RocketMQInboundChannelAdapter.this
-										.consumeMessage(msgs, () -> {
-												context.setSuspendCurrentQueueTimeMillis(
-																extendedConsumerProperties.getExtension()
-																				.getPush()
-																				.getSuspendCurrentQueueTimeMillis());
+						                .consumeMessage(msgs, () -> {
+											    context.setSuspendCurrentQueueTimeMillis(
+																 extendedConsumerProperties.getExtension()
+																		         .getPush()
+																		         .getSuspendCurrentQueueTimeMillis());
 												return ConsumeOrderlyStatus.SUSPEND_CURRENT_QUEUE_A_MOMENT;
 										}, () -> ConsumeOrderlyStatus.SUCCESS));
 			}
