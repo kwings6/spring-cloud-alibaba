@@ -98,7 +98,7 @@ public class NacosAutoServiceRegistrationManagementPortTests {
 	@EnableAutoConfiguration
 	@ImportAutoConfiguration({ AutoServiceRegistrationConfiguration.class,
 			NacosDiscoveryClientConfiguration.class,
-			NacosServiceRegistryAutoConfiguration.class})
+			NacosServiceRegistryAutoConfiguration.class })
 	public static class TestConfig {
 		@Bean
 		@ConditionalOnMissingBean
