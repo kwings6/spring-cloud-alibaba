@@ -28,13 +28,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
 /**
  * Provide interfaces to consumers.
  *
  * @author kwings6
  */
+
 @RestController
 public class EchoController {
 

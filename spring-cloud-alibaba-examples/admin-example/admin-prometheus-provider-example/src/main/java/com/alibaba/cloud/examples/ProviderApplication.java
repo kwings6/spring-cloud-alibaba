@@ -35,10 +35,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
 
-
 /**
  * @author kwings6
  */
+
 @EnableDiscoveryClient
 @SpringBootApplication
 public class ProviderApplication {
