@@ -91,7 +91,7 @@ public class NacosAutoServiceRegistrationManagementPortTests {
 				.isEqualTo("8888");
 		assertThat(
 				properties.getMetadata().get(NacosRegistration.MANAGEMENT_CONTEXT_PATH))
-								.isEqualTo("/test-context-path");
+				                .isEqualTo("/test-context-path");
 	}
 
 	@Configuration
@@ -100,6 +100,7 @@ public class NacosAutoServiceRegistrationManagementPortTests {
 			NacosDiscoveryClientConfiguration.class,
 			NacosServiceRegistryAutoConfiguration.class })
 	public static class TestConfig {
+
 		@Bean
 		@ConditionalOnMissingBean
 		PrometheusMeterRegistry prometheusMeterRegistry() {
