@@ -16,7 +16,6 @@
 
 package com.alibaba.cloud.examples.configuration;
 
-
 import com.alibaba.cloud.sentinel.annotation.SentinelRestTemplate;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;

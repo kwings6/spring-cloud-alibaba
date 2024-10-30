@@ -18,9 +18,3 @@ scrape_configs:
 #    scrape_interval: 2s
 #    static_configs:
 #      - targets: ['otel-collector:8888']
-
-  # spring boot actuator 指标暴露
-#  - job_name: 'spring-boot-prometheus-exporter'
-#    metrics_path: '/actuator/prometheus'
-#    static_configs:
-#      - targets: [ '10.2.64.5:18083' ]

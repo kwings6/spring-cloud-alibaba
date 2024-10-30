@@ -53,10 +53,11 @@ public class NacosDiscoveryPropertiesServerAddressTopLevelTests {
 
 	@Configuration
 	@EnableAutoConfiguration
-	@ImportAutoConfiguration({AutoServiceRegistrationConfiguration.class,
+	@ImportAutoConfiguration({ AutoServiceRegistrationConfiguration.class,
 			NacosDiscoveryClientConfiguration.class,
 			NacosServiceRegistryAutoConfiguration.class })
 	public static class TestConfig {
+
 		@Bean
 		@ConditionalOnMissingBean
 		PrometheusMeterRegistry prometheusMeterRegistry() {

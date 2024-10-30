@@ -16,7 +16,6 @@
 
 package com.alibaba.cloud.examples;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
