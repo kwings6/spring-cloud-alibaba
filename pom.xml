@@ -108,7 +108,7 @@
         <module>spring-cloud-alibaba-starters</module>
         <module>spring-cloud-alibaba-coverage</module>
         <module>spring-cloud-alibaba-tests</module>
-	</modules>
+    </modules>
 
     <dependencyManagement>
         <dependencies>
