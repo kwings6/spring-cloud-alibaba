@@ -40,7 +40,7 @@ public class NacosDiscoveryMetricsOpenFeignInterceptor implements ResponseInterc
 
 		Response response = invocationContext.response();
 
-		Counter qpsCounter = Counter.builder("spring-cloud.rpc.openfeign.qps")
+		Counter qpsCounter = Counter.builder("spring.cloud.rpc.openfeign.qps")
 				.description("Spring Cloud Alibaba QPS metrics when use OpenFeign RPC Call.")
 				.baseUnit(TimeUnit.SECONDS.name())
 				.tag("sca.openfeign.rpc", "url: " + request.url()

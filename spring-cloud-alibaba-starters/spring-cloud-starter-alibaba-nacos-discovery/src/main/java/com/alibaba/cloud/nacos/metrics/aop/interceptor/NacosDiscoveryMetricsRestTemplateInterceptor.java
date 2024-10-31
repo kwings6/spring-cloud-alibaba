@@ -42,7 +42,7 @@ public class NacosDiscoveryMetricsRestTemplateInterceptor implements ClientHttpR
 		ClientHttpResponse response = execution.execute(request, body);
 
 
-		qpsCounter = Counter.builder("spring-cloud.rpc.restTemplate.qps")
+		qpsCounter = Counter.builder("spring.cloud.rpc.restTemplate.qps")
 				.description("Spring Cloud Alibaba QPS metrics when use resTemplate RPC Call.")
 				.baseUnit(TimeUnit.SECONDS.name())
 				.tag("sca.resTemplate.rpc", "url: " + request.getURI()

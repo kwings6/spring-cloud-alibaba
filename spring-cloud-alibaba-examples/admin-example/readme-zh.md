@@ -108,8 +108,6 @@ nacos.core.auth.plugin.nacos.token.secret.key=SecretKey0123456789012345678901234
 2. 访问 Nacos Server Console
 
    浏览器输入地址 http://127.0.0.1:8848/nacos ，**首次登陆需要绑定 nacos 用户，因为新版本增加了鉴权，需要应用注册和配置绑定时配置用户名和密码。**
-   
-   
 
 ## 正确配置RocketMQ并启动
 
@@ -133,8 +131,6 @@ sh bin/mqbroker -n localhost:9876
 Windows操作系统直接启动 `mqnamesrv.cmd`
 
 然后 `start mqbroker.cmd -n localhost:9876 autoCreateTopicEnable=true`
-
-
 
 ## Admin 应用示例
 
@@ -200,8 +196,6 @@ public class ProviderApplication {
 }
 ```
 
-
-
 #### 分别使用Nacos RestTemplate，OpenFeign，Reactive
 
 1. 地址栏分别输入
@@ -212,11 +206,13 @@ public class ProviderApplication {
 
 `http://localhost:18083/service-call/test`
 
-
-
 2. 输入`http://localhost:18083/actuator/metrics`查看指标
 
-<img src="./images/image-20241025102148518.png" alt="image-20241025102148518.png" style="zoom: 50%;" />
+```text
+"spring.cloud.rpc.openfeign.qps"
+"spring.cloud.rpc.reactive.qps"
+"spring.cloud.rpc.restTemplate.qps"
+```
 
 3. 输入`http://localhost:18083/actuator/metrics/spring-cloud.rpc.reactive.qps`可查看详细数据
 
@@ -240,8 +236,6 @@ public class ProviderApplication {
 }
 ```
 
-
-
 #### 使用Sentinel RestTemplate的degrade和flow
 
 1. 在地址栏输入
@@ -251,7 +245,10 @@ public class ProviderApplication {
 
 2. 输入`http://localhost:18083/actuator/metrics`查看指标
 
-<img src="./images/image-20241025102711586.png" alt="image-20241025102711586.png" style="zoom: 50%;" />
+```text
+"spring.cloud.alibaba.sentinel.degrade.sum"
+"spring.cloud.alibaba.sentinel.flow.sum"
+```
 
 3. 输入`http://localhost:18083/actuator/metrics/spring.cloud.alibaba.sentinel.degrade.sum`查看具体指标
 
@@ -266,8 +263,6 @@ public class ProviderApplication {
 }
 ```
 
-
-
 ## 接入Prometheus和Grafana
 
 #### 可以先通过地址`http://localhost:18083/actuator/prometheus`查看传输给Prometheus的数据
@@ -276,9 +271,12 @@ public class ProviderApplication {
 
 **通过docker启动Prometheus和Grafana，启动前修改prometheus文件夹下的config.yml 的targets位置的ip地址请修改为个人电脑的ip**
 
-<img src="./images/image-20241025103258457.png" alt="image-20241025103258457.png" style="zoom: 50%;" />
-
-
+```yaml
+  - job_name: 'admin-prometheus'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ '127.0.0.1:18083' ]
+```
 
 **输入`http://localhost:9090/targets?search=`有两个刮取指标的地址**
 
@@ -286,15 +284,11 @@ public class ProviderApplication {
 
 <img src="./images/image-20241025103649642.png" alt="image-20241025103649642.png" style="zoom: 50%;" />
 
-
-
 **然后再搜索框进行搜索能看到指标**
 
 <img src="./images/image-20241024225418675.png" alt="image-20241024225418675.png" style="zoom: 50%;" />
 
 <img src="./images/image-20241024225435691.png" alt="image-20241024225435691.png" style="zoom: 50%;" />
-
-
 
 #### 使用docker启动grafana
 
@@ -313,8 +307,6 @@ public class ProviderApplication {
 **测试是否成功**
 
 <img src="./images/image-20241024225708457.png" alt="image-20241024225708457.png" style="zoom: 50%;" />
-
-
 
 **返回到dashboard中import导入文件夹中的json文件作为grafana面板**
 

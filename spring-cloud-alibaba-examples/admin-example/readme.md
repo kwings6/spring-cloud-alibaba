@@ -109,9 +109,6 @@ Authentication is required when using the Open api interface in nacos server 2.4
 
    The browser enters the address http://127.0.0.1:8848/nacos , **The first login needs to bind the nacos user, because the new version adds authentication, and the user name and password need to be configured during application registration and configuration binding.**
 
-
-
-
 ## Configure RocketMQ and start it
 
 ### Spring Cloud Alibaba RocketMQ
@@ -134,8 +131,6 @@ sh bin/mqnamesrv
 ```
 sh bin/mqbroker -n localhost:9876
 ```
-
-
 
 ## Admin application example
 
@@ -201,8 +196,6 @@ public class ProviderApplication {
 }
 ```
 
-
-
 #### Use Nacos RestTemplate, OpenFeign, Reactive respectively
 
 1. Address bar input
@@ -213,11 +206,13 @@ public class ProviderApplication {
 
 `http://localhost:18083/service-call/test`
 
-
-
 2. Input` http://localhost:18083/actuator/metrics `view metrics
 
-<img src="./images/image-20241025102148518.png" alt="image-20241025102148518.png" style="zoom: 50%;" />
+```text
+"spring.cloud.rpc.openfeign.qps"
+"spring.cloud.rpc.reactive.qps"
+"spring.cloud.rpc.restTemplate.qps"
+```
 
 3. Input` http://localhost:18083/actuator/metrics/spring -Cloud.rpc.reactive. qps ` can view detailed data
 
@@ -250,7 +245,10 @@ public class ProviderApplication {
 
 2. Input`http://localhost:18083/actuator/metrics`View metrics
 
-<img src="./images/image-20241025102711586.png" alt="image-20241025102711586.png" style="zoom: 50%;" />
+```text
+"spring.cloud.alibaba.sentinel.degrade.sum"
+"spring.cloud.alibaba.sentinel.flow.sum"
+```
 
 3. input`http://localhost:18083/actuator/metrics/spring.cloud.alibaba.sentinel.degrade.sum`can view detailed data
 
@@ -273,7 +271,12 @@ public class ProviderApplication {
 
 **Start Prometheus and Grafana through Docker. Before starting, modify the IP address of the targets location in the config. yml folder of Prometheus to the IP address of your personal computer**
 
-<img src="./images/image-20241025103258457.png" alt="image-20241025103258457.png" style="zoom: 50%;" />
+```yaml
+  - job_name: 'admin-prometheus'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ '127.0.0.1:18083' ]
+```
 
 **Input` http://localhost:9090/targets?search= `There are two addresses for scraping metrics**
 
@@ -281,13 +284,11 @@ public class ProviderApplication {
 
 <img src="./images/image-20241025103649642.png" alt="image-20241025103649642.png" style="zoom: 50%;" />
 
-
 **Then search in the search box to see the metrics**
 
 <img src="./images/image-20241024225418675.png" alt="image-20241024225418675.png" style="zoom: 50%;" />
 
 <img src="./images/image-20241024225435691.png" alt="image-20241024225435691.png" style="zoom: 50%;" />
-
 
 #### Starting Grafana with Docker
 
@@ -306,7 +307,6 @@ public class ProviderApplication {
 **Is the test successful**
 
 <img src="./images/image-20241024225708457.png" alt="image-20241024225708457.png" style="zoom: 50%;" />
-
 
 **Return to dashboard and import the JSON file from the import folder as the Grafana panel**
 

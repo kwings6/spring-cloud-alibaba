@@ -44,7 +44,7 @@ public class NacosDiscoveryMetricsReactiveInterceptor implements ExchangeFilterF
 		URI url = request.url();
 
 		return next.exchange(request).doOnSuccess(response -> {
-			Counter qpsCounter = Counter.builder("spring-cloud.rpc.reactive.qps")
+			Counter qpsCounter = Counter.builder("spring.cloud.rpc.reactive.qps")
 					.description("Spring Cloud Alibaba QPS metrics when use Reactive RPC Call.")
 					.baseUnit(TimeUnit.SECONDS.name()).tag("sca.reactive.rpc.method", method.name())
 					.tag("sca.reactive.rpc", "url: " + url + "  method: " + method.name() + "  status: " + response.statusCode())
